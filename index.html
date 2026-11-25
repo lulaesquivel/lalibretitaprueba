@@ -34,6 +34,17 @@ body{margin:0;background:#E9E2D3}a{color:#1B2A4A}
 .btn{transition:transform .2s ease}.arr{transition:transform .3s cubic-bezier(.3,1.5,.5,1),background-color .2s}.fbtn:hover .arr{background:#FF8A6B}.fbtn:focus-visible{outline:3px solid #FF8A6B;outline-offset:-3px}.btn:hover{transform:translateY(-2px)}
 .hbadge{transition:transform .25s ease}.hbadge:hover{transform:scale(1.06)}a:focus-visible{outline:3px solid #FF8A6B;outline-offset:3px}
 @supports (animation-timeline:view()){.reveal{animation:rise linear both;animation-timeline:view();animation-range:entry 0px entry 160px}}
+@media (max-width:700px){
+.nav-links,.nav-linea{display:none!important}
+.nav-top{justify-content:space-between;flex-wrap:nowrap!important;padding-left:16px!important}
+.nav-top .script{font-size:30px!important;white-space:nowrap}
+.pegados{gap:10px}
+.pegados>a{margin-left:0!important;padding-left:24px!important;flex:1 1 100%;justify-content:center}
+.hero-foto{padding:0!important}
+.hero-foto [role=img]{height:300px!important}
+.hero-2020{position:static!important;width:auto!important;margin-top:12px}
+#andas,#herramientas,#nosotras,#contacto{margin-top:64px!important}
+}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
 </head>
@@ -42,11 +53,11 @@ body{margin:0;background:#E9E2D3}a{color:#1B2A4A}
 <main style="max-width:1280px;margin:0 auto;background:#FBF9F4;border-radius:8px;padding:clamp(16px,2.5vw,36px);color:#1B2A4A;font-family:'Schibsted Grotesk',system-ui,sans-serif;overflow:hidden">
 
 <!-- NAV -->
-<nav aria-label="Principal" class="box" style="border-radius:999px;background:#E6DFD0;padding:8px 8px 8px 22px;display:flex;align-items:center;gap:20px;flex-wrap:wrap">
+<nav aria-label="Principal" class="box nav-top" style="border-radius:999px;background:#E6DFD0;padding:8px 8px 8px 22px;display:flex;align-items:center;gap:20px;flex-wrap:wrap">
 <a href="./" class="script" style="font-size:40px;line-height:1;text-decoration:none">La Libretita</a>
-<span aria-hidden="true" style="flex:1;min-width:20px;height:1.5px;background:#1B2A4A"></span>
-<div style="display:flex;gap:24px;flex-wrap:wrap;font-size:15px"><a href="#andas" style="text-decoration:none">En qué andás</a><a href="#herramientas" style="text-decoration:none">Herramientas</a><a href="#nosotras" style="text-decoration:none">Nosotras</a></div>
-<span aria-hidden="true" style="flex:1;min-width:20px;height:1.5px;background:#1B2A4A"></span>
+<span class="nav-linea" aria-hidden="true" style="flex:1;min-width:20px;height:1.5px;background:#1B2A4A"></span>
+<div class="nav-links" style="display:flex;gap:24px;flex-wrap:wrap;font-size:15px"><a href="#andas" style="text-decoration:none">En qué andás</a><a href="#herramientas" style="text-decoration:none">Herramientas</a><a href="#nosotras" style="text-decoration:none">Nosotras</a></div>
+<span class="nav-linea" aria-hidden="true" style="flex:1;min-width:20px;height:1.5px;background:#1B2A4A"></span>
 <a class="btn box" href="#contacto" style="border-radius:999px;display:inline-flex;align-items:center;min-height:44px;padding:0 22px;background:#F1EA86;text-decoration:none;font-weight:500">Escribinos</a>
 </nav>
 
@@ -56,7 +67,7 @@ body{margin:0;background:#E9E2D3}a{color:#1B2A4A}
 
 <h1 class="rise" style="animation-delay:.2s;margin:10px 0 24px;font-weight:500;font-size:clamp(50px,6vw,88px);line-height:.98;letter-spacing:-.03em">Ordená tu negocio. Contalo mejor. <span aria-hidden="true" style="display:inline-flex;vertical-align:middle"><span class="box" style="width:56px;height:56px;border-radius:50%;background:#FF8A6B"></span><span class="box" style="width:56px;height:56px;border-radius:50%;background:#F1EA86;margin-left:-20px;display:inline-flex;align-items:center;justify-content:center"><svg class="spin" width="24" height="24" viewBox="0 0 24 24"><path d="M12 1l2.6 8.4L23 12l-8.4 2.6L12 23l-2.6-8.4L1 12l8.4-2.6z" fill="none" stroke="#1B2A4A" stroke-width="1.6"></path></svg></span></span><span class="sr"> La Libretita, mentorías, talleres y comunicación para emprendedores y pymes</span></h1>
 <p class="rise" style="animation-delay:.3s;margin:0 0 32px;max-width:560px;font-size:17px;line-height:1.6">Acompañamos a emprendedores, pymes y organizaciones con mentorías, talleres y comunicación. Primero entendemos dónde estás, después elegimos juntos qué mejorar y armamos un plan que puedas sostener.</p>
-<div class="rise" style="animation-delay:.4s;display:flex;align-items:center;flex-wrap:wrap;margin-bottom:32px">
+<div class="rise pegados" style="animation-delay:.4s;display:flex;align-items:center;flex-wrap:wrap;margin-bottom:32px">
 <a class="btn" href="#andas" style="display:inline-flex;align-items:center;gap:14px;min-height:54px;padding:0 30px;border-radius:999px;background:#1B2A4A;color:#FBF9F4;text-decoration:none;font-weight:500;position:relative;z-index:1">¿En qué andás? <span aria-hidden="true">→</span></a>
 <a class="btn box" href="herramientas/autodiagnostico.html" style="display:inline-flex;align-items:center;gap:12px;min-height:52px;padding:0 8px 0 38px;margin-left:-22px;border-radius:999px;background:#E6DFD0;text-decoration:none;font-weight:500">Autodiagnóstico <span aria-hidden="true" style="width:38px;height:38px;border-radius:50%;background:#1B2A4A;color:#FBF9F4;display:inline-flex;align-items:center;justify-content:center;font-size:12px">▶</span></a>
 </div>
@@ -67,21 +78,21 @@ body{margin:0;background:#E9E2D3}a{color:#1B2A4A}
 </div>
 </div>
 
-<div class="rise" style="animation-delay:.15s;flex:1 1 440px;min-width:0;position:relative;padding:0 0 40px 24px">
+<div class="rise hero-foto" style="animation-delay:.15s;flex:1 1 440px;min-width:0;position:relative;padding:0 0 40px 24px">
 <div class="box t-cielo" style="padding:16px;border-radius:28px">
 <p class="fr write" style="margin:0 0 12px;font-size:34px;font-style:italic;font-weight:500">consultora de dos hermanas</p><div class="box" role="img" aria-label="Foto de Mery y Lula (a reemplazar)" style="height:440px;border-radius:18px;background:#2B3346;color:#C9CED8;display:flex;align-items:center;justify-content:center;font-size:13px;position:relative">[ foto de Mery y Lula ]
 <span class="box" style="position:absolute;top:16px;left:16px;border-radius:999px;padding:6px 14px;background:#FBF9F4;color:#1B2A4A;font-size:14px;font-weight:500">Mery &amp; Lula</span>
 </div>
 </div>
 
-<div class="box" style="position:absolute;left:0;bottom:0;width:min(260px,70%);padding:18px 20px;background:#FBF9F4">
+<div class="box hero-2020" style="position:absolute;left:0;bottom:0;width:min(260px,70%);padding:18px 20px;background:#FBF9F4">
 <div style="display:flex;align-items:center;gap:12px"><span aria-hidden="true" style="color:#FF8A6B">◆</span><span aria-hidden="true" style="flex:1;height:1.5px;background:#1B2A4A"></span></div>
 <p style="margin:10px 0 4px;font-size:38px;font-weight:500;line-height:1">2020</p>
 <p style="margin:0;font-size:13px;line-height:1.45">Trabajamos juntas desde entonces: primero en construcción, después en consultoría.</p>
 </div>
 </div>
 </header><section id="andas" style="margin-top:96px">
-<h2 class="fr reveal" style="margin:0 0 24px;font-size:clamp(64px,8vw,112px)">¿En qué andás?</h2>
+<h2 class="fr reveal" style="margin:0 0 24px;font-size:clamp(44px,8vw,112px)">¿En qué andás?</h2>
 <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(440px,100%),1fr));gap:16px">
 <article id="c01" class="tile box reveal" style="background:#A9C8E8;padding:14px;display:flex;flex-direction:column;gap:12px">
 <div class="box" style="border-radius:16px;background:#FBF9F4;padding:18px 20px;display:flex;justify-content:space-between;align-items:flex-start;gap:12px">
@@ -157,7 +168,7 @@ body{margin:0;background:#E9E2D3}a{color:#1B2A4A}
 <!-- HERRAMIENTAS -->
 <section id="herramientas" style="margin-top:96px">
 <div class="reveal" style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:16px 40px;margin-bottom:24px">
-<div><h2 class="fr" style="margin:0;font-size:clamp(64px,8vw,112px)">Herramientas</h2><p class="fr" style="margin:6px 0 0;font-size:clamp(30px,3vw,44px);font-weight:500">Para usar hoy mismo</p></div>
+<div><h2 class="fr" style="margin:0;font-size:clamp(44px,8vw,112px)">Herramientas</h2><p class="fr" style="margin:6px 0 0;font-size:clamp(30px,3vw,44px);font-weight:500">Para usar hoy mismo</p></div>
 <p style="margin:0;max-width:420px;font-size:15px;line-height:1.55">Las armamos para nuestros talleres y las compartimos para que las uses cuando quieras. Sin registro y sin vueltas.</p>
 </div>
 <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px">
@@ -213,8 +224,8 @@ body{margin:0;background:#E9E2D3}a{color:#1B2A4A}
 <!-- CONTACTO -->
 <section id="contacto" class="box reveal" style="margin-top:96px;background:#F1EA86;padding:14px">
 <div class="box" style="border-radius:16px;padding:40px 28px;display:flex;flex-wrap:wrap;gap:24px;align-items:center;justify-content:space-between">
-<div><h2 class="fr" style="margin:0;font-size:clamp(64px,8vw,112px)">Escribinos</h2><p style="margin:0;font-size:16px">Contanos en qué andás y lo charlamos, sin compromiso.</p></div>
-<div style="display:flex;align-items:center;flex-wrap:wrap">
+<div><h2 class="fr" style="margin:0;font-size:clamp(44px,8vw,112px)">Escribinos</h2><p style="margin:0;font-size:16px">Contanos en qué andás y lo charlamos, sin compromiso.</p></div>
+<div class="pegados" style="display:flex;align-items:center;flex-wrap:wrap">
 <!-- CONTACTO: reemplazá los tres href por los reales -->
 <a class="btn" href="https://wa.me/549XXXXXXXXXX" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:12px;min-height:52px;padding:0 28px;border-radius:999px;background:#1B2A4A;color:#FBF9F4;text-decoration:none;font-weight:500;position:relative;z-index:1">WhatsApp <span aria-hidden="true">→</span></a>
 <a class="btn box" href="https://instagram.com/USUARIO" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;min-height:50px;padding:0 24px 0 36px;margin-left:-20px;border-radius:999px;background:#F0A9D2;text-decoration:none;font-weight:500">Instagram</a>
