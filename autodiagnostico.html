@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="es-AR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Autodiagnóstico de tu negocio | La Libretita</title>
+<meta name="description" content="Siete preguntas cortas para ver cómo está tu negocio hoy: organización, plata, presupuestos, equipo, ventas y comunicación. Gratis y sin registro.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Pinyon+Script&family=Fraunces:ital,opsz,wght,SOFT@0,9..144,400..700,100;1,9..144,400..700,100&family=Schibsted+Grotesk:wght@400;500;600&family=Archivo+Narrow:wght@500;600&display=swap" rel="stylesheet">
+<style>
+/* Tokens del sistema de diseño de La Libretita */
+:root{
+  --fondo:#E9E2D3;--superficie:#FBF9F4;--arena:#E6DFD0;--tinta:#1B2A4A;--tinta-suave:#4A5470;
+  --celeste:#A9C8E8;--rosa:#F0A9D2;--coral:#FF8A6B;--manteca:#EDE77E;--amarillo:#F1EA86;--tomate:#C8421C;
+  --font-logo:"Pinyon Script",cursive;--font-titulos:"Fraunces",Georgia,serif;
+  --font-texto:"Schibsted Grotesk",system-ui,sans-serif;--font-etiqueta:"Archivo Narrow","Arial Narrow",sans-serif;
+  --borde:1.5px solid var(--tinta);--r-caja:16px;--r-tarjeta:24px;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--fondo);color:var(--tinta);font-family:var(--font-texto);-webkit-font-smoothing:antialiased}
+.hoja{max-width:820px;margin:clamp(0px,3vw,40px) auto;background:var(--superficie);border-radius:8px;padding:clamp(16px,3vw,32px);min-height:calc(100dvh - 80px)}
+a{color:var(--tinta)}
+.titulo{font-family:var(--font-titulos);font-variation-settings:'SOFT' 100;font-weight:600;letter-spacing:-.02em;line-height:1;margin:0}
+.volanta{font-family:var(--font-etiqueta);font-weight:500;text-transform:uppercase;font-size:15px;margin:0}
+.tarjeta{border:var(--borde);border-radius:var(--r-tarjeta);padding:14px}
+.caja{border:var(--borde);border-radius:var(--r-caja);padding:20px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* menú */
+.menu{display:flex;align-items:center;gap:16px;border:var(--borde);border-radius:999px;background:var(--arena);padding:6px 6px 6px 20px;margin-bottom:28px}
+.logo{font-family:var(--font-logo);font-size:34px;line-height:1.1;color:var(--amarillo);-webkit-text-stroke:1.5px var(--tinta);paint-order:stroke fill;text-decoration:none}
+.menu .linea{flex:1;height:1.5px;background:var(--tinta)}
+.etiqueta{display:inline-flex;align-items:center;gap:6px;padding:6px 14px;border:var(--borde);border-radius:999px;font-size:14px;background:var(--superficie)}
+
+/* botones */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:12px;min-height:50px;padding:0 26px;border-radius:999px;font:500 16px/1.2 var(--font-texto);text-decoration:none;cursor:pointer;border:0;transition:transform .2s ease,opacity .2s}
+.btn:hover:not(:disabled){transform:translateY(-2px)}
+.btn-principal{background:var(--tinta);color:var(--superficie)}
+.btn-secundario{background:var(--arena);color:var(--tinta);border:var(--borde)}
+.btn:disabled{opacity:.4;cursor:default}
+.btn-circulo{background:var(--superficie);color:var(--tinta);border:var(--borde);padding:0 6px 0 18px;min-height:46px;font-size:15px}
+.btn-circulo .ico{width:32px;height:32px;border-radius:50%;background:var(--tinta);color:var(--superficie);display:inline-flex;align-items:center;justify-content:center;font-size:13px}
+.btn:focus-visible,.opcion:focus-visible,input:focus-visible,.link:focus-visible{outline:3px solid var(--coral);outline-offset:3px}
+
+/* pantallas */
+.pantalla{display:none}.pantalla.on{display:block}
+
+/* intro */
+.intro-grid{display:flex;flex-direction:column;gap:12px}
+.campos{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(240px,100%),1fr));gap:12px;margin:22px 0}
+.campo label{display:block;font-size:14px;font-weight:500;margin:0 0 6px}
+.campo input{width:100%;min-height:48px;font:400 16px var(--font-texto);padding:0 16px;border:var(--borde);border-radius:12px;background:var(--superficie);color:var(--tinta)}
+.campo small{display:block;margin-top:6px;font-size:13px;color:var(--tinta-suave)}
+.areas{display:flex;flex-wrap:wrap;gap:8px}
+.rombo{color:var(--tomate)}
+
+/* preguntas */
+.progreso{display:flex;gap:6px;margin:0 0 18px}
+.progreso span{flex:1;height:10px;border-radius:999px;border:var(--borde);background:var(--superficie);transition:background-color .3s}
+.progreso span.lleno{background:var(--tinta)}
+.preg-cab{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;background:var(--superficie)}
+.contador{font-family:var(--font-titulos);font-variation-settings:'SOFT' 100;font-weight:500;font-size:22px;white-space:nowrap}
+.opciones{display:flex;flex-direction:column;gap:10px;margin-top:12px}
+.aviso-multi{margin:12px 4px 0;font-size:14px}
+.opcion{all:unset;box-sizing:border-box;cursor:pointer;display:flex;gap:14px;align-items:flex-start;width:100%;min-height:56px;padding:14px 16px;border:var(--borde);border-radius:var(--r-caja);background:var(--superficie);font-size:15.5px;line-height:1.45;transition:transform .15s ease,background-color .15s}
+.opcion:hover{transform:translateX(4px)}
+.opcion .marca{flex:0 0 24px;width:24px;height:24px;margin-top:1px;border:var(--borde);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:600;background:var(--superficie)}
+.opcion.multi .marca{border-radius:7px}
+.opcion[aria-checked="true"]{background:var(--amarillo)}
+.opcion[aria-checked="true"] .marca{background:var(--tinta);color:var(--superficie)}
+.nav{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:20px}
+
+/* resultado */
+.res-cab{margin-bottom:20px}
+.res-cab .titulo{font-size:clamp(36px,6vw,56px);margin-top:6px}
+.bento{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(220px,100%),1fr));gap:12px}
+.area{display:flex;flex-direction:column;gap:10px;padding:18px}
+.area .top{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+.area .nivel{font-family:var(--font-titulos);font-variation-settings:'SOFT' 100;font-weight:600;font-size:34px;line-height:1}
+.area .nivel small{font-size:16px;font-weight:500}
+.barra{display:flex;gap:5px}
+.barra i{flex:1;height:12px;border-radius:999px;border:var(--borde);background:var(--superficie);position:relative;overflow:hidden}
+.barra i b{position:absolute;inset:0;background:var(--tinta);transform-origin:left;transform:scaleX(0);transition:transform .5s cubic-bezier(.2,.8,.2,1)}
+.barra i.medio b{background:repeating-linear-gradient(135deg,var(--tinta) 0 3px,transparent 3px 6px)}
+.area .hoy{margin:0;font-size:13.5px;line-height:1.45}
+.grupo-tit{margin:28px 0 10px}
+.perfil{background:var(--amarillo);display:flex;flex-direction:column;gap:12px}
+.perfil .caja{background:var(--superficie)}
+.perfil ul,.lista{margin:0;padding-left:20px;line-height:1.6}
+.paso{display:flex;flex-direction:column;gap:12px}
+.paso .fila{display:grid;grid-template-columns:86px 1fr;gap:10px;font-size:15px;line-height:1.5}
+.paso .et{font-family:var(--font-etiqueta);font-weight:500;text-transform:uppercase;font-size:14px;padding-top:2px}
+.dato{background:var(--arena);padding:18px 20px}
+.dato p{margin:6px 0 0;font-size:15px;line-height:1.55}
+.charla{background:var(--coral);margin-top:28px}
+.charla .caja{background:var(--superficie)}
+.botones{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}
+.link{background:none;border:0;padding:8px;font:500 14px var(--font-texto);color:var(--tinta);text-decoration:underline;text-underline-offset:3px;cursor:pointer}
+.pie{margin-top:28px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;font-size:13px;color:var(--tinta-suave)}
+
+/* movimiento */
+@keyframes sube{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
+.sube{animation:sube .6s cubic-bezier(.2,.8,.2,1) both}
+@media (prefers-reduced-motion:reduce){*,*::before{animation:none!important;transition:none!important}.barra i b{transform:scaleX(1)}}
+</style>
+</head>
+<body>
+<div class="hoja">
+
+<nav class="menu" aria-label="La Libretita">
+  <a class="logo" href="https://lalibretita.com">La Libretita</a>
+  <span class="linea" aria-hidden="true"></span>
+  <span class="etiqueta">Herramienta gratis</span>
+</nav>
+
+<main>
+<!-- ═══════════ INTRO ═══════════ -->
+<section class="pantalla on" id="intro" aria-labelledby="t-intro">
+  <div class="tarjeta sube" style="background:var(--rosa)">
+    <div class="intro-grid">
+      <div class="caja" style="background:var(--superficie)">
+        <p class="volanta">Autodiagnóstico · 7 preguntas</p>
+        <h1 class="titulo" id="t-intro" style="font-size:clamp(38px,7vw,60px);margin-top:8px">¿Cómo está tu negocio hoy?</h1>
+      </div>
+      <div class="caja">
+        <p style="margin:0;font-size:16.5px;line-height:1.6">Siete preguntas cortas sobre cómo trabajás: cómo organizás las tareas, cómo manejás la plata, cómo conseguís clientes. Al final ves en qué áreas estás más firme y por dónde conviene empezar.</p>
+        <div class="campos">
+          <div class="campo">
+            <label for="inputNombre">Tu nombre</label>
+            <input type="text" id="inputNombre" autocomplete="given-name" placeholder="Cómo te llamás">
+          </div>
+          <div class="campo">
+            <label for="inputMail">Tu mail <span style="font-weight:400">(opcional)</span></label>
+            <input type="email" id="inputMail" autocomplete="email" inputmode="email" placeholder="tu@mail.com">
+            <small>Para mandarte el resultado. No te llenamos la casilla de mails.</small>
+          </div>
+        </div>
+        <div style="display:flex;flex-wrap:wrap;align-items:center;gap:16px">
+          <button class="btn btn-principal" id="btnEmpezar" type="button" disabled>Empezar <span aria-hidden="true">→</span></button>
+          <span style="font-size:14px">Toma 3 minutos. No hay respuestas correctas.</span>
+        </div>
+      </div>
+      <div class="areas" aria-label="Áreas que vas a mirar">
+        <span class="etiqueta"><span class="rombo" aria-hidden="true">◆</span> organización</span>
+        <span class="etiqueta"><span class="rombo" aria-hidden="true">◆</span> administración</span>
+        <span class="etiqueta"><span class="rombo" aria-hidden="true">◆</span> presupuestos</span>
+        <span class="etiqueta"><span class="rombo" aria-hidden="true">◆</span> equipo</span>
+        <span class="etiqueta"><span class="rombo" aria-hidden="true">◆</span> ventas</span>
+        <span class="etiqueta"><span class="rombo" aria-hidden="true">◆</span> comunicación</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ PREGUNTAS ═══════════ -->
+<section class="pantalla" id="preguntas" aria-labelledby="pTitulo">
+  <div class="progreso" id="progreso" aria-hidden="true"></div>
+  <div class="tarjeta" id="pTarjeta">
+    <div class="caja preg-cab">
+      <div>
+        <p class="volanta" id="pGrupo"></p>
+        <h2 class="titulo" id="pTitulo" style="font-size:clamp(32px,6vw,46px);margin-top:6px" tabindex="-1"></h2>
+      </div>
+      <span class="contador" id="progNum"></span>
+    </div>
+    <p class="aviso-multi" id="pAviso" hidden>Elegí todas las que correspondan, o ninguna.</p>
+    <div class="opciones" id="pOpciones"></div>
+  </div>
+  <div class="nav">
+    <button class="btn btn-secundario" id="btnAtras" type="button">← Atrás</button>
+    <button class="btn btn-principal" id="btnSiguiente" type="button" disabled>Siguiente →</button>
+  </div>
+</section>
+
+<!-- ═══════════ RESULTADO ═══════════ -->
+<section class="pantalla" id="resultado" aria-labelledby="t-res">
+  <div class="res-cab">
+    <p class="volanta" id="pEyebrow">Tu resultado</p>
+    <h1 class="titulo" id="t-res" tabindex="-1">Así está tu negocio hoy</h1>
+  </div>
+
+  <div class="bento" id="pAreas"></div>
+
+  <h2 class="titulo grupo-tit" style="font-size:30px">Tu perfil</h2>
+  <div class="tarjeta perfil">
+    <div class="caja">
+      <h3 class="titulo" id="pTit" style="font-size:clamp(28px,4.4vw,40px)"></h3>
+      <p id="pIntro" style="margin:12px 0 0;font-size:16px;line-height:1.6"></p>
+    </div>
+    <div class="caja">
+      <p style="margin:0 0 6px;font-weight:600">A trabajar:</p>
+      <ul id="pLista"></ul>
+    </div>
+  </div>
+
+  <h2 class="titulo grupo-tit" style="font-size:30px">Por dónde empezar</h2>
+  <div class="bento" id="pPasos" style="grid-template-columns:repeat(auto-fit,minmax(min(320px,100%),1fr))"></div>
+
+  <h2 class="titulo grupo-tit" style="font-size:30px">Dos datos más</h2>
+  <div class="bento" style="grid-template-columns:repeat(auto-fit,minmax(min(320px,100%),1fr))">
+    <div class="tarjeta dato"><p class="volanta">Comunicación</p><p id="pComunicacion"></p></div>
+    <div class="tarjeta dato"><p class="volanta">Un consejito</p><p id="pConsejo"></p></div>
+  </div>
+
+  <div class="tarjeta charla">
+    <div class="caja">
+      <h2 class="titulo" style="font-size:clamp(30px,5vw,44px)">¿Lo vemos juntos?</h2>
+      <p style="margin:10px 0 0;font-size:16px;line-height:1.6">Con este resultado podemos armar tu plan en una primera charla, sin compromiso. Mery &amp; Lula.</p>
+      <div class="botones">
+        <a class="btn btn-principal" href="https://lalibretita.com/#contacto">Escribinos <span aria-hidden="true">→</span></a>
+        <a class="btn btn-circulo" id="pRecomendada" href="https://lalibretita.com/herramientas/costos.html"><span><b>Te recomendamos:</b> <span id="pRecNombre">Calculadora de costos</span></span><span class="ico" aria-hidden="true">↗</span></a>
+      </div>
+    </div>
+  </div>
+
+  <div style="text-align:center;margin-top:16px">
+    <p id="pMailOk" style="font-size:14px;margin:0 0 6px" hidden></p>
+    <button class="link" id="btnRehacer" type="button">Volver a responder</button>
+  </div>
+</section>
+</main>
+
+<footer class="pie">
+  <span>La Libretita · Mentorías, talleres y comunicación</span>
+  <a href="https://lalibretita.com">lalibretita.com</a>
+</footer>
+</div>
+
+<script>
+/* ══════════════════════════════════════════════════════
+   1. LAS PREGUNTAS
+   Las primeras 5 son de nivel único (elegís UNA, de 0 a 4).
+   Comunicación y Tecnología son de selección múltiple.
+   ══════════════════════════════════════════════════════ */
+const AREAS=[
+{k:"ope",n:"Organización",corto:"Organización",duro:true,tipo:"unico",opciones:[
+ "Trabajo a demanda, voy adonde y cuando me llaman.",
+ "Tengo un cronograma o agenda de trabajo con los proyectos activos.",
+ "Tengo un cronograma general con un plan de trabajo para cada proyecto.",
+ "Tengo un cronograma general con un plan detallado para cada proyecto: pasos a seguir, materiales o insumos, responsables, etc.",
+ "Además de todo lo anterior, hago un seguimiento periódico para detectar retrasos y anticiparme a los próximos pasos."]},
+{k:"admin",n:"Administración",corto:"Administración",duro:true,tipo:"unico",opciones:[
+ "No llevo ningún registro de ingresos y egresos.",
+ "Anoto ingresos y egresos de forma básica (cuaderno o planilla simple).",
+ "Calculo el costo y la rentabilidad de cada producto o servicio (sé cuánto gano en cada uno).",
+ "Llevo una planilla de todo el negocio y sé cuánto necesito trabajar para cubrir los gastos fijos y ganar a fin de mes.",
+ "Tengo a alguien (contador o administrativo) que se encarga de esto."]},
+{k:"pres",n:"Presupuestos",corto:"Presupuestos",duro:true,tipo:"unico",opciones:[
+ "Paso al cliente un estimado y ajusto al terminar el trabajo.",
+ "Estimo gastos de manera informal o mental.",
+ "Tengo una planilla o herramienta para calcular el presupuesto y un formato para presentarlo al cliente.",
+ "Además de la planilla para calcular, anoto todos los presupuestos que envío y les hago seguimiento.",
+ "Tengo a alguien que hace los presupuestos y los envía a los potenciales clientes."]},
+{k:"equi",n:"Equipo",corto:"Equipo",duro:false,tipo:"unico",opciones:[
+ "Por ahora puedo resolver todo por mi cuenta.",
+ "Contrato gente para trabajos puntuales.",
+ "Tengo un equipo de trabajo fijo, pero sin roles definidos.",
+ "Tengo un equipo de trabajo con roles y responsabilidades definidas por persona.",
+ "Tengo a alguien a cargo de los equipos y yo me ocupo de otras áreas del negocio."]},
+{k:"com",n:"Ventas",corto:"Ventas",duro:false,tipo:"unico",opciones:[
+ "No hago ninguna acción comercial: me contactan por el boca en boca.",
+ "Hago algunas acciones de vez en cuando: contacto por WhatsApp, publicaciones en redes, promociones, estados, etc.",
+ "Tengo una estrategia de marketing definida (objetivos, público, calendario de acciones).",
+ "Invierto plata en publicidad (online o física) para impulsar mis ventas.",
+ "Tengo una persona o equipo a cargo del área comercial que gestiona todo lo anterior."]},
+{k:"marca",n:"Comunicación",corto:"Comunicación",duro:false,tipo:"multi",opciones:[
+ "Tengo definido mi nombre y mi logo",
+ "Tengo redes sociales como Instagram, Facebook o TikTok",
+ "Tengo un número de WhatsApp que es solo para mi negocio",
+ "Aparezco en Google Maps",
+ "Tengo un documento con mis servicios o productos detallados para pasar",
+ "Hago fotos y videos de mis servicios o productos",
+ "Tengo una persona que se ocupa de la comunicación de marca (en el equipo o tercerizada)",
+ "Todo esto se mantiene actualizado semanalmente"]}
+];
+const TECNOLOGIA={k:"tec",n:"Uso de tecnología",tipo:"multi",esTip:true,opciones:[
+ "Uso IA para presupuestar",
+ "Uso IA para armar contenido de redes y comunicación",
+ "Uso Excel u Hojas de cálculo de Google",
+ "Uso programas de diseño (Canva, AutoCAD, etc.)",
+ "Uso computadora",
+ "Uso celular",
+ "Uso carpetas compartidas en Google Drive",
+ "Uso correo electrónico"]};
+const PREGUNTAS=[...AREAS,TECNOLOGIA];
+const COLOR={true:"var(--celeste)",false:"var(--rosa)",tip:"var(--manteca)"};
+const U="https://lalibretita.com/herramientas/";
+
+let RESP=new Array(PREGUNTAS.length).fill(null), qi=0, NOMBRE="", MAIL="";
+const $=id=>document.getElementById(id);
+
+/* ══════════ 2. PERFILES Y RECOMENDACIONES ══════════ */
+const BUILDING_AREAS=AREAS.filter(a=>a.tipo==="unico");
+function perfil(v){
+  const prom=(...a)=>a.reduce((x,y)=>x+y,0)/a.length;
+  const t=["ope","admin","pres","equi","com","marca"].map(k=>v[k]);
+  if(t.every(x=>x<=1)) return {t:"Recién empezando",
+    intro:"Estás arrancando, ¡y venís bien! Todavía no tenés un sistema armado: se trabaja a demanda, sin registrar ni planificar. Lo que sigue no es complicado: son tres cosas que, si las incorporás, cambian todo.",
+    l:["Llevar un registro básico de la plata que entra y sale","Tener un canal de contacto claro para tus clientes","Armar un cronograma simple de trabajo"]};
+  if(t.every(x=>x>=3)) return {t:"Negocio consolidado",
+    intro:"Tu negocio está parado sobre bases sólidas en las seis áreas. El desafío ahora es elegir en qué área querés crecer, sin perder el foco en el resto.",
+    l:["Evaluar si conviene crecer o sumar gente","Buscar nuevas oportunidades de trabajo"]};
+  if(v.equi<=1&&v.ope>=3&&v.admin>=2) return {t:"Todo el peso en vos",
+    intro:"Tenés el oficio y los números resueltos, pero todo pasa por vos. Es un negocio que funciona porque estás ahí, y eso tiene un techo: si vos no estás, se para. El próximo paso es que una parte de lo que sabés hacer la pueda hacer otra persona.",
+    l:["Sumar a alguien que te ayude o tercerizar una parte","Documentar tus procesos para poder enseñarlos"]};
+  if(prom(v.ope,v.admin,v.pres)>=2.5&&prom(v.com,v.marca)<=1.5) return {t:"Buen laburo, poca visibilidad",
+    intro:"Del lado del trabajo estás sólido: organizás bien, calculás bien, presupuestás bien. Lo que te frena no es la calidad de lo que hacés: es que poca gente se entera. Ahí está tu mayor margen para crecer hoy.",
+    l:["Armar una marca simple","Hacer alianzas o acciones comerciales","Ordenar cómo te comunicás con tus clientes"]};
+  if(prom(v.com,v.marca)>=2.5&&prom(v.admin,v.pres)<=1.5) return {t:"Vendés, pero no controlás los costos",
+    intro:"Conseguís trabajo, que ya es lo más difícil para muchos. El problema es que no sabés con precisión cuánto te queda de cada venta, y podés estar perdiendo plata sin darte cuenta, incluso con la agenda llena.",
+    l:["Sacar el costo real de cada producto o servicio","Armar un presupuesto","Anotar ingresos y egresos"]};
+  if(prom(v.com,v.marca)>=2.5&&prom(v.pres,v.ope)<=1.5) return {t:"Con trabajo, sin orden",
+    intro:"No te falta demanda, te falta método. Cada trabajo se resuelve un poco a las apuradas, y eso cuesta tiempo, plata y algún cliente enojado. Ordenar cómo planificás es la mejora con más impacto inmediato para vos.",
+    l:["Armar un cronograma","Presupuestar cada trabajo","Ordenar tus procesos"]};
+  const b=[...BUILDING_AREAS].sort((a,c)=>v[a.k]-v[c.k]).slice(0,2).map(a=>a.n.toLowerCase());
+  return {t:"Perfil mixto",
+    intro:"Tu negocio no tiene un solo problema grande: tiene varios chicos repartidos. Y eso es una buena noticia, porque ordenando de a una las dos áreas más flojas ya vas a mejorar un montón.",
+    l:[`Empezar por ${b[0]}`,`Y después seguir con ${b[1]}`]};
+}
+function proximosPasos(v){
+  return [...BUILDING_AREAS].sort((a,c)=>v[a.k]-v[c.k]).slice(0,2).map(a=>({area:a,nivel:v[a.k],hoy:a.opciones[v[a.k]],prox:v[a.k]<4?a.opciones[v[a.k]+1]:null}));
+}
+function parrafoComunicacion(sel,ops){
+  const n=ops.filter((_,i)=>sel[i]).length, falta=ops.find((_,i)=>!sel[i]);
+  if(!n) return `Todavía no tenés ninguna de estas cosas resuelta. Un buen primer paso: ${ops[0].toLowerCase()}.`;
+  if(!falta) return "Tenés las 8 cosas resueltas. El desafío ahora es mantenerlo actualizado semana a semana.";
+  return `Ya tenés ${n} de 8 resueltas. Lo que más te conviene sumar ahora: ${falta.charAt(0).toLowerCase()+falta.slice(1)}.`;
+}
+function consejoTecnologia(sel){
+  const [iaPresu,iaCont,excel,,compu,,drive,correo]=sel;
+  if(!iaPresu) return "Probá usar una inteligencia artificial para armar tus presupuestos más rápido.";
+  if(!iaCont) return "Probá usar una inteligencia artificial para armar el contenido de tus redes.";
+  if(!drive) return "Probá guardar tus archivos en una carpeta compartida de Google Drive, así no se pierden.";
+  if(!excel) return "Probá armar una planilla simple en Excel o Google Sheets para llevar tus números.";
+  if(!correo) return "Probá tener un correo electrónico que sea solo para tu negocio.";
+  if(!compu) return "Probá sumar una computadora a tu rutina para las tareas de gestión y presupuestos.";
+  return "Ya le estás sacando el jugo a la tecnología. Así se sigue.";
+}
+/* herramienta recomendada según el área más floja */
+function recomendada(v){
+  const peor=[...AREAS].sort((a,c)=>v[a.k]-v[c.k])[0].k;
+  if(peor==="admin"||peor==="pres") return {n:"Calculadora de costos",href:U+"costos.html"};
+  if(peor==="com"||peor==="marca") return {n:"Caja de herramientas de comunicación",href:U+"comunicacion.html"};
+  return {n:"Desafíos con IA",href:"https://lalibretita.com/#herramientas"};
+}
+
+/* ══════════ 3. PANTALLAS ══════════ */
+function mostrar(id,foco){
+  document.querySelectorAll(".pantalla").forEach(p=>p.classList.remove("on"));
+  $(id).classList.add("on");
+  window.scrollTo({top:0,behavior:"smooth"});
+  if(foco) $(foco).focus({preventScroll:true});
+}
+const respondida=i=>PREGUNTAS[i].tipo==="multi"||Number.isInteger(RESP[i]);
+
+function pintarPregunta(enfocar){
+  const a=PREGUNTAS[qi];
+  $("progNum").textContent=`${qi+1}/${PREGUNTAS.length}`;
+  $("progreso").innerHTML=PREGUNTAS.map((_,i)=>`<span class="${i<=qi?"lleno":""}"></span>`).join("");
+  $("pGrupo").textContent=a.esTip?"Un dato más":(a.duro?"Lo que hacés":"Cómo lo mostrás");
+  $("pTitulo").textContent=a.n;
+  $("pTarjeta").style.background=a.esTip?COLOR.tip:COLOR[a.duro];
+  const multi=a.tipo==="multi";
+  $("pAviso").hidden=!multi;
+  const cont=$("pOpciones"); cont.innerHTML="";
+  cont.setAttribute("role",multi?"group":"radiogroup");
+  cont.setAttribute("aria-labelledby","pTitulo");
+  if(multi&&!Array.isArray(RESP[qi])) RESP[qi]=new Array(a.opciones.length).fill(0);
+  a.opciones.forEach((texto,i)=>{
+    const on=multi?!!RESP[qi][i]:RESP[qi]===i;
+    const b=document.createElement("button");
+    b.type="button"; b.className="opcion sube"+(multi?" multi":"");
+    b.style.animationDelay=(i*0.04)+"s";
+    b.setAttribute("role",multi?"checkbox":"radio");
+    b.setAttribute("aria-checked",on?"true":"false");
+    const m=document.createElement("span"); m.className="marca"; m.setAttribute("aria-hidden","true"); m.textContent=on?"✓":"";
+    const t=document.createElement("span"); t.textContent=texto;
+    b.append(m,t);
+    b.addEventListener("click",()=>{
+      if(multi) RESP[qi][i]=RESP[qi][i]?0:1; else RESP[qi]=i;
+      actualizarOpciones();
+    });
+    cont.appendChild(b);
+  });
+  $("btnAtras").disabled=qi===0;
+  actualizarOpciones();
+  if(enfocar) $("pTitulo").focus({preventScroll:true});
+}
+function actualizarOpciones(){
+  const a=PREGUNTAS[qi], multi=a.tipo==="multi";
+  [...$("pOpciones").children].forEach((b,i)=>{
+    const on=multi?!!RESP[qi][i]:RESP[qi]===i;
+    b.setAttribute("aria-checked",on?"true":"false");
+    b.querySelector(".marca").textContent=on?"✓":"";
+  });
+  $("btnSiguiente").disabled=!respondida(qi);
+  $("btnSiguiente").textContent=qi===PREGUNTAS.length-1?"Ver resultado →":"Siguiente →";
+}
+
+function terminar(){
+  const NIV={};
+  AREAS.forEach((a,i)=>{ NIV[a.k]=a.tipo==="multi"?RESP[i].filter(Boolean).length*0.5:RESP[i]; });
+  const selMarca=RESP[5], selTec=RESP[6];
+  NIV.tec=selTec.filter(Boolean).length*0.5;
+  pintarResultado(NIV,selMarca,selTec);
+  mostrar("resultado","t-res");
+  const p=perfil(NIV);
+  enviarDatos({
+    origen:"lalibretita",
+    nombre:NOMBRE, email:MAIL||null,
+    fecha:new Date().toISOString(),
+    perfil:p.t, niveles:NIV,
+    comunicacion_items:AREAS[5].opciones.filter((_,i)=>selMarca[i]),
+    tecnologia_items:TECNOLOGIA.opciones.filter((_,i)=>selTec[i])
+  });
+}
+
+function pintarResultado(NIV,selMarca,selTec){
+  $("pEyebrow").textContent=`Tu resultado, ${NOMBRE}`;
+  /* tarjetas de área */
+  const cont=$("pAreas"); cont.innerHTML="";
+  AREAS.forEach((a,i)=>{
+    const v=NIV[a.k];
+    const d=document.createElement("article");
+    d.className="tarjeta area sube"; d.style.background=COLOR[a.duro]; d.style.animationDelay=(i*0.07)+"s";
+    const top=document.createElement("div"); top.className="top";
+    const nom=document.createElement("p"); nom.className="volanta"; nom.textContent=a.corto;
+    const niv=document.createElement("span"); niv.className="nivel";
+    niv.innerHTML=`${String(v).replace(".",",")}<small>/4</small>`;
+    top.append(nom,niv);
+    const barra=document.createElement("div"); barra.className="barra";
+    barra.setAttribute("role","img"); barra.setAttribute("aria-label",`${a.n}: nivel ${v} de 4`);
+    for(let s=1;s<=4;s++){
+      const seg=document.createElement("i");
+      if(v>=s-0.5&&v<s) seg.className="medio";
+      const f=document.createElement("b"); f.style.transitionDelay=(0.3+i*0.07+s*0.08)+"s";
+      seg.appendChild(f); barra.appendChild(seg);
+      if(v>=s-0.5) requestAnimationFrame(()=>requestAnimationFrame(()=>{f.style.transform="scaleX(1)";}));
+    }
+    const hoy=document.createElement("p"); hoy.className="hoy";
+    hoy.textContent=a.tipo==="multi"?`${selMarca.filter(Boolean).length} de 8 cosas resueltas.`:a.opciones[v];
+    d.append(top,barra,hoy); cont.appendChild(d);
+  });
+  /* perfil */
+  const p=perfil(NIV);
+  $("pTit").textContent=p.t; $("pIntro").textContent=p.intro;
+  $("pLista").innerHTML=""; p.l.forEach(x=>{const li=document.createElement("li"); li.textContent=x; $("pLista").appendChild(li);});
+  /* pasos */
+  const pasos=$("pPasos"); pasos.innerHTML="";
+  proximosPasos(NIV).forEach((ps,i)=>{
+    const c=document.createElement("article"); c.className="tarjeta sube"; c.style.background=COLOR[ps.area.duro]; c.style.animationDelay=(i*0.08)+"s";
+    c.innerHTML=`<div class="caja paso" style="background:var(--superficie)">
+      <p class="volanta"></p>
+      <div class="fila"><span class="et">Hoy</span><span class="t-hoy"></span></div>
+      <div class="fila"><span class="et">Siguiente</span><b class="t-prox" style="font-weight:600"></b></div></div>`;
+    c.querySelector(".volanta").textContent=`${i+1} · ${ps.area.n}`;
+    c.querySelector(".t-hoy").textContent=ps.hoy;
+    c.querySelector(".t-prox").textContent=ps.prox||"Ya estás en el nivel más alto de esta área.";
+    pasos.appendChild(c);
+  });
+  $("pComunicacion").textContent=parrafoComunicacion(selMarca,AREAS[5].opciones);
+  $("pConsejo").textContent=consejoTecnologia(selTec);
+  const r=recomendada(NIV); $("pRecNombre").textContent=r.n; $("pRecomendada").href=r.href;
+  $("pMailOk").hidden=!MAIL; if(MAIL) $("pMailOk").textContent=`Te mandamos una copia a ${MAIL}.`;
+}
+
+/* ══════════ 4. ENVÍO A LA BASE DE DATOS ══════════
+   Manda las respuestas a herramientas/guardar.php (misma carpeta que este archivo, tabla propia).
+   Guarda en la tabla libretita_autodiagnostico, separada de la de Emprendo Norte.
+   Para probar sin servidor, dejá ENDPOINT vacío: solo se guarda en el navegador. */
+const ENDPOINT="guardar.php";
+async function enviarDatos(datos){
+  try{const prev=JSON.parse(localStorage.getItem("ll_autodiagnostico")||"[]"); prev.push(datos); localStorage.setItem("ll_autodiagnostico",JSON.stringify(prev));}catch(e){}
+  if(!ENDPOINT){console.log("[La Libretita] Respuesta lista para enviar:",datos);return;}
+  try{await fetch(ENDPOINT,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(datos)});}
+  catch(e){console.error("[La Libretita] No se pudo enviar la respuesta:",e);}
+}
+
+/* ══════════ 5. EVENTOS ══════════ */
+const validarInicio=()=>{
+  NOMBRE=$("inputNombre").value.trim(); MAIL=$("inputMail").value.trim();
+  const mailOk=!MAIL||$("inputMail").checkValidity();
+  $("btnEmpezar").disabled=!NOMBRE||!mailOk;
+};
+$("inputNombre").addEventListener("input",validarInicio);
+$("inputMail").addEventListener("input",validarInicio);
+$("btnEmpezar").addEventListener("click",()=>{ if($("btnEmpezar").disabled) return; qi=0; mostrar("preguntas"); pintarPregunta(true); });
+$("btnAtras").addEventListener("click",()=>{ if(qi>0){qi--; pintarPregunta(true);} });
+$("btnSiguiente").addEventListener("click",()=>{ if(!respondida(qi)) return; if(qi<PREGUNTAS.length-1){qi++; pintarPregunta(true); window.scrollTo({top:0,behavior:"smooth"});} else terminar(); });
+$("btnRehacer").addEventListener("click",()=>{ RESP=new Array(PREGUNTAS.length).fill(null); qi=0; mostrar("preguntas"); pintarPregunta(true); });
+</script>
+</body>
+</html>

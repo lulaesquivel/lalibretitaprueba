@@ -1,0 +1,1403 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Calculadora de costos y precios para emprendedores | La Libretita</title>
+<meta name="description" content="Calculá gratis los costos variables y fijos de tu servicio, tu meta de ingresos y cuánto te queda con el precio que cobrás. Paso a paso, desde el celular, con resumen en PDF.">
+<link rel="canonical" href="https://lalibretita.com/herramientas/costos.html">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://lalibretita.com/herramientas/costos.html">
+<meta property="og:title" content="Calculadora de costos y precios — La Libretita">
+<meta property="og:description" content="¿Te alcanza lo que cobrás? Calculalo paso a paso y descargá tu resumen en PDF. Gratis.">
+<meta property="og:locale" content="es_AR">
+<meta name="theme-color" content="#E9E2D3">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "Calculadora de costos y precios", "url": "https://lalibretita.com/herramientas/costos.html", "applicationCategory": "BusinessApplication", "operatingSystem": "Web", "inLanguage": "es-AR", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "ARS"}, "description": "Calculá los costos variables y fijos de tu servicio, tu meta de ingresos y cuánto te queda con el precio que cobrás. Descargá el resumen en PDF.", "publisher": {"@type": "Organization", "name": "La Libretita", "url": "https://lalibretita.com"}}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Pinyon+Script&family=Fraunces:opsz,wght,SOFT@9..144,500..700,100&family=Schibsted+Grotesk:wght@400;500;600;700&family=Archivo+Narrow:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --brick: #1B2A4A;        /* tinta: botones, costos variables */
+    --brick-dark: #0F1A30;
+    --terracotta: #1B2A4A;
+    --ochre: #EDE77E;        /* manteca: costos fijos */
+    --ochre-light: #F6F2C8;
+    --ink: #1B2A4A;
+    --paper: #FBF9F4;
+    --card: #FBF9F4;
+    --card-edge: #1B2A4A;
+    --muted: #4A5470;
+    --green: #2F6B4A;
+    --green-bg: #DCEBDD;
+    --verde-seg: #8FC69A;    /* ganancia */
+    --red: #B3361A;
+    --red-bg: #FBE0D6;
+    --yellow: #5E5300;
+    --yellow-bg: #F6F2C8;
+    --blue: #A9C8E8;         /* celeste: tu trabajo */
+    --blue-bg: #E3EEF8;
+    --blue-light: #D3E3F3;
+    --fondo: #E9E2D3;
+    --amarillo: #F1EA86;
+    --shadow: none;
+    --radius: 20px;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: 'Schibsted Grotesk', system-ui, sans-serif;
+    background: var(--fondo);
+    color: var(--ink);
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+  }
+  .shell {
+    max-width: 640px;
+    margin: 0 auto;
+    background: var(--paper);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 96px;
+  }
+  h1, h2, h3, .display {
+    font-family: 'Fraunces', Georgia, serif; font-variation-settings: 'SOFT' 100;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    line-height: 1.05;
+    margin: 0;
+  }
+  p { margin: 0 0 12px; line-height: 1.5; }
+  button { font-family: inherit; }
+
+  header.top {
+    padding: 18px 20px 14px;
+    background: var(--brick);
+    color: #fff;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    box-shadow: var(--shadow);
+  }
+  .wordmark {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    opacity: 0.85;
+    margin-bottom: 10px;
+  }
+
+  main { flex: 1; padding: 20px 20px 8px; }
+
+  .step-progress { display: flex; gap: 6px; margin-bottom: 18px; }
+  .step-progress .dot { height: 4px; flex: 1; border-radius: 2px; background: var(--card-edge); }
+  .step-progress .dot.done { background: var(--ochre); }
+  .step-progress .dot.current { background: var(--brick); }
+
+  .eyebrow { font-size: 13px; font-weight: 700; color: var(--brick); }
+  .step-title { font-size: 26px; margin: 4px 0 6px; }
+  .step-sub { color: var(--muted); font-size: 15px; margin-bottom: 20px; }
+
+  .card {
+    background: var(--card);
+    border: 1px solid var(--card-edge);
+    border-radius: var(--radius);
+    padding: 18px;
+    margin-bottom: 14px;
+    box-shadow: var(--shadow);
+  }
+  .field { margin-bottom: 18px; }
+  .field:last-child { margin-bottom: 0; }
+  .field label { display: block; font-size: 14px; font-weight: 600; margin-bottom: 6px; }
+  .field .help { font-size: 13px; color: var(--muted); margin: -2px 0 8px; }
+  .money-input {
+    display: flex; align-items: center;
+    border: 1.5px solid var(--card-edge); border-radius: 10px;
+    overflow: hidden; background: var(--paper);
+  }
+  .money-input span { padding: 0 4px 0 12px; font-weight: 700; color: var(--muted); }
+  .money-input input {
+    flex: 1; border: none; background: transparent;
+    padding: 12px 12px 12px 4px; font-size: 17px; font-weight: 600;
+    color: var(--ink); font-family: 'Schibsted Grotesk', sans-serif; min-width: 0;
+  }
+  .money-input input:focus { outline: none; }
+  .money-input:focus-within { border-color: var(--brick); }
+  input[type="text"] {
+    width: 100%; border: 1.5px solid var(--card-edge); border-radius: 10px;
+    background: var(--paper); padding: 12px; font-size: 16px; font-weight: 600;
+    color: var(--ink); font-family: 'Schibsted Grotesk', sans-serif;
+  }
+  input[type="text"]:focus { outline: none; border-color: var(--brick); }
+  .stepper-inline { display: flex; align-items: center; gap: 12px; }
+  .stepper-inline button {
+    width: 40px; height: 40px; border-radius: 50%; border: 1.5px solid var(--card-edge);
+    background: var(--paper); font-size: 20px; font-weight: 700; color: var(--brick); cursor: pointer;
+  }
+  .stepper-inline .val { flex: 1; text-align: center; font-family: 'Fraunces', Georgia, serif; font-variation-settings: 'SOFT' 100; font-weight: 600; font-size: 22px; }
+
+  .subtotal-row {
+    display: flex; justify-content: space-between; align-items: center;
+    padding-top: 14px; margin-top: 4px; border-top: 1.5px dashed var(--card-edge);
+  }
+  .subtotal-row .label { font-size: 14px; font-weight: 700; color: var(--muted); }
+  .subtotal-row .amt { font-family: 'Fraunces', Georgia, serif; font-variation-settings: 'SOFT' 100; font-weight: 600; font-size: 22px; color: var(--brick); }
+
+  .card-tint-red { background: rgba(184,80,66,0.08); border-color: var(--terracotta); }
+  .field-group {
+    border: 1.5px solid var(--terracotta); border-radius: 12px; padding: 16px;
+    margin-bottom: 18px; background: rgba(184,80,66,0.05);
+  }
+  .field-group .field { margin-bottom: 14px; }
+  .field-group .subtotal-row { border-top: 1.5px dashed var(--card-edge); }
+
+  .extra-costo-row { display: flex; gap: 8px; align-items: center; margin-bottom: 10px; }
+  .extra-costo-row input[type="text"] { flex: 1.1; min-width: 0; }
+  .extra-costo-row .money-input { flex: 1; min-width: 0; }
+  .remove-extra-costo { border: none; background: transparent; color: var(--muted); font-size: 18px; cursor: pointer; padding: 4px 6px; flex-shrink: 0; }
+  .add-extra-btn {
+    width: 100%; padding: 12px; border-radius: 10px; border: 1.5px dashed var(--card-edge);
+    background: transparent; color: var(--brick); font-weight: 700; font-size: 14px; cursor: pointer; margin-top: 4px;
+  }
+
+  .precio-box { border: 1.5px solid var(--card-edge); border-radius: 14px; overflow: hidden; margin-bottom: 16px; background: var(--card); box-shadow: var(--shadow); }
+  .precio-box-header { display: flex; justify-content: space-between; align-items: center; padding: 14px 16px; border-bottom: 1.5px solid var(--card-edge); font-size: 14px; font-weight: 700; color: var(--muted); }
+  .precio-box-header .amt { font-family: 'Fraunces', Georgia, serif; font-variation-settings: 'SOFT' 100; font-weight: 600; font-size: 20px; color: var(--ink); }
+  .precio-box-stack { display: flex; flex-direction: column; }
+  .precio-box-seg { display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 10px 6px; color: var(--ink); }
+  .seg-margen { background: var(--verde-seg); }
+  .seg-variable { background: var(--brick); color: #FBF9F4; }
+  .seg-warn { background: var(--red); color: #fff; }
+  .seg-label { font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.03em; }
+  .seg-amt { font-family: 'Fraunces', Georgia, serif; font-variation-settings: 'SOFT' 100; font-weight: 600; font-size: 18px; margin-top: 2px; }
+  .seg-pct { font-size: 11px; opacity: 0.85; margin-top: 2px; font-weight: 700; }
+  .subtotal-row.result {
+    border-top: none; margin: 14px -18px -18px; padding: 16px 18px;
+    background: rgba(184,80,66,0.16); border-radius: 0 0 var(--radius) var(--radius);
+  }
+  .subtotal-row.result .amt { font-size: 26px; }
+
+  .banner {
+    background: var(--ochre-light); color: var(--brick-dark); border-radius: 12px;
+    padding: 14px 16px; font-size: 14px; margin-bottom: 16px; line-height: 1.45;
+  }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .banner { background: #3a2e17; color: var(--ochre); } }
+  :root[data-theme="dark"] .banner { background: #3a2e17; color: var(--ochre); }
+
+  nav.bottom {
+    position: fixed; bottom: 0; left: 0; right: 0; background: var(--paper);
+    border-top: 1px solid var(--card-edge); padding: 12px 20px calc(12px + env(safe-area-inset-bottom)); z-index: 10;
+  }
+  .nav-inner { max-width: 600px; margin: 0 auto; display: flex; gap: 10px; }
+  .btn { flex: 1; padding: 15px; border-radius: 12px; font-size: 15px; font-weight: 700; border: none; cursor: pointer; text-align: center; }
+  .btn-primary { background: var(--brick); color: #fff; }
+  .btn-primary:active { background: var(--brick-dark); }
+  .btn-ghost { background: var(--card); color: var(--ink); border: 1.5px solid var(--card-edge); flex: 0 0 90px; }
+  .btn:disabled { opacity: 0.4; cursor: default; }
+
+  .reset-link {
+    display: block; text-align: center; font-size: 12px; color: var(--muted);
+    margin: 18px 0 4px; background: none; border: none; text-decoration: underline; cursor: pointer;
+  }
+
+  .check-row {
+    display: flex; align-items: center; gap: 12px; padding: 14px;
+    border: 1.5px solid var(--card-edge); border-radius: 12px; cursor: pointer;
+  }
+  .check-row.selected { border-color: var(--brick); background: rgba(154,58,38,0.05); }
+  .check-box {
+    width: 24px; height: 24px; border-radius: 6px; border: 2px solid var(--card-edge);
+    flex-shrink: 0; display: flex; align-items: center; justify-content: center;
+    font-weight: 900; font-size: 14px; color: #fff;
+  }
+  .check-box.checked { background: var(--brick); border-color: var(--brick); }
+  .check-row .txt { font-size: 14px; font-weight: 600; }
+  select.nombre-select {
+    width: 100%; border: 1.5px solid var(--card-edge); border-radius: 10px;
+    background: var(--paper); padding: 12px; font-size: 16px; font-weight: 600;
+    color: var(--ink); font-family: 'Schibsted Grotesk', sans-serif; -webkit-appearance: none; appearance: none;
+    background-image: linear-gradient(45deg, transparent 50%, var(--muted) 50%), linear-gradient(135deg, var(--muted) 50%, transparent 50%);
+    background-position: calc(100% - 20px) 50%, calc(100% - 14px) 50%; background-size: 6px 6px; background-repeat: no-repeat;
+  }
+  select.nombre-select:focus { outline: none; border-color: var(--brick); }
+  .field.falta select, .field.falta input { border-color: var(--red); }
+  .card-title { font-size: 17px; font-weight: 800; margin: 0 0 14px; color: var(--ink); }
+  .aviso-falta { color: var(--red); font-size: 13px; font-weight: 600; margin-top: 8px; }
+  .envio-card h3 { font-size: 18px; margin: 0 0 6px; }
+  .envio-card p { font-size: 14px; color: var(--muted); margin: 0 0 14px; line-height: 1.45; }
+  .envio-status { font-size: 14px; font-weight: 600; margin: 0 0 14px; padding: 10px 12px; border-radius: 10px; }
+  .envio-status.ok { background: var(--green-bg); color: var(--green); }
+  .envio-status.error { background: var(--red-bg); color: var(--red); }
+  .envio-status.enviando { background: var(--yellow-bg); color: var(--yellow); }
+  .envio-card .btn { display: block; width: 100%; margin-bottom: 10px; }
+  .envio-card .btn-ghost { flex: none; }
+
+  /* ── La Libretita ── */
+  :focus-visible { outline: 3px solid #FF8A6B; outline-offset: 3px; }
+  .card, .precio-box { border: 1.5px solid var(--ink); box-shadow: none; }
+  .card-tint-red { background: #EEF4FA; border-color: var(--ink); }
+  .field-group { border-color: var(--ink); background: #FBF9F4; border-radius: 16px; }
+  .money-input, input[type="text"], select.nombre-select { border: 1.5px solid var(--ink); border-radius: 12px; min-height: 48px; }
+  .step-progress .dot { height: 10px; border-radius: 999px; background: #E6DFD0; border: 1.5px solid var(--ink); }
+  .step-progress .dot.done { background: var(--blue); }
+  .step-progress .dot.current { background: var(--ink); }
+  .eyebrow { font-family: 'Archivo Narrow', sans-serif; font-weight: 500; font-size: 15px; text-transform: uppercase; color: var(--ink); }
+  .step-title { font-size: clamp(28px, 7vw, 38px); line-height: 1; }
+  .stepper-inline button { width: 44px; height: 44px; border-color: var(--ink); }
+  .check-row { border-color: var(--ink); border-radius: 14px; min-height: 48px; }
+  .check-row.selected { background: var(--amarillo); border-color: var(--ink); }
+  .check-box { border-color: var(--ink); border-radius: 50%; }
+  .check-box.checked { background: var(--ink); }
+  .add-extra-btn { border-color: var(--ink); border-radius: 999px; min-height: 46px; }
+  .banner { border: 1.5px solid currentColor; }
+  .btn { border-radius: 999px; min-height: 50px; }
+  .btn-ghost { border-color: var(--ink); background: #E6DFD0; }
+  nav.bottom { background: rgba(251,249,244,.96); border-top: 1.5px solid var(--ink); }
+  .marca { display: flex; align-items: center; gap: 12px; border: 1.5px solid var(--ink); border-radius: 999px; background: #E6DFD0; padding: 6px 6px 6px 18px; margin: 16px 20px 0; }
+  .logo { font-family: 'Pinyon Script', cursive; font-size: 30px; line-height: 1.1; color: var(--amarillo); -webkit-text-stroke: 1.5px var(--ink); paint-order: stroke fill; text-decoration: none; white-space: nowrap; }
+  .marca .linea { flex: 1; height: 1.5px; background: var(--ink); }
+  .marca .pill { border: 1.5px solid var(--ink); border-radius: 999px; padding: 5px 12px; font-size: 13px; background: var(--paper); white-space: nowrap; }
+  .cabecera { margin: 14px 20px 0; background: var(--blue); border: 1.5px solid var(--ink); border-radius: 24px; padding: 12px; }
+  .cabecera > div { background: var(--paper); border: 1.5px solid var(--ink); border-radius: 16px; padding: 18px; }
+  .cabecera h1 { font-size: clamp(30px, 7vw, 42px); line-height: 1; margin: 0 0 8px; }
+  .cabecera p { margin: 0; font-size: 15px; }
+  .charla { background: #FF8A6B; border: 1.5px solid var(--ink); border-radius: 24px; padding: 12px; margin: 0 0 14px; }
+  .charla > div { background: var(--paper); border: 1.5px solid var(--ink); border-radius: 16px; padding: 18px; }
+  .charla h3 { font-size: 26px; margin: 0 0 6px; }
+  .charla a { display: inline-flex; align-items: center; min-height: 48px; padding: 0 22px; border-radius: 999px; background: var(--ink); color: var(--paper); text-decoration: none; font-weight: 500; margin-top: 8px; }
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script>window.jspdf || document.write('<script src="jspdf.umd.min.js"><\/script>');</script>
+</head>
+<body>
+<div class="shell">
+  <nav class="marca" aria-label="La Libretita"><a class="logo" href="https://lalibretita.com">La Libretita</a><span class="linea" aria-hidden="true"></span><span class="pill">Herramienta gratis</span></nav>
+  <header class="cabecera"><div>
+    <h1>Calculadora de costos y precios</h1>
+    <p>Cargá los costos de un servicio, tus gastos fijos y tu meta de ingresos, y mirá cuánto te queda con el precio que cobrás. Todo se guarda en tu celular.</p>
+  </div></header>
+  <main id="main"></main>
+  <nav class="bottom">
+    <div class="nav-inner">
+      <button class="btn btn-ghost" id="btn-back" onclick="prevStep()">Atrás</button>
+      <button class="btn btn-primary" id="btn-next" onclick="nextStep()">Siguiente</button>
+    </div>
+  </nav>
+</div>
+
+<script>
+/* ---------- state ---------- */
+const STORAGE_KEY = 'll_costos_v1';
+
+function defaultExtra(nombre) {
+  return {
+    nombre: nombre || '',
+    diasObra: 2, personas: 1,
+    materiales: 0, jornal: 0, fletes: 0, alquilerEquipos: 0, otrosVar: 0, imprevistos: 0,
+    precioOjo: 0, sueldoObra: 0, trabaja: false, extraCostos: [],
+    diasVos: 2, horasVos: 8, valorHora: 0
+  };
+}
+
+const defaultState = {
+  step1: 0,
+  fase1: {
+    nombreParticipante: '',
+    obraNombre: '',
+    diasObra: 3,
+    personas: 1,
+    diasVos: 3,
+    horasVos: 8,
+    precioOjo: 0,
+    materiales: 0,
+    jornal: 0,
+    valorHoraTuya: 0,
+    fletes: 0,
+    alquilerEquipos: 0,
+    otrosVar: 0,
+    imprevistos: 0,
+    extraCostos: [],
+    metaMensual: 0,
+    metaEsFija: false,
+    alquilerLocal: 0,
+    servicios: 0,
+    vehiculo: 0,
+    celular: 0,
+    seguro: 0,
+    comerciales: 0,
+    publicidad: 0,
+    extraFijos: [],
+    personalEmpresa: 0,
+    extraPersonal: [],
+    extras: []
+  }
+};
+
+function loadState() {
+  const base = JSON.parse(JSON.stringify(defaultState));
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) return base;
+    const parsed = JSON.parse(raw);
+    if (parsed.step1) base.step1 = parsed.step1;
+    if (parsed.fase1) Object.assign(base.fase1, parsed.fase1);
+    return base;
+  } catch (e) {
+    return base;
+  }
+}
+
+let state = loadState();
+
+function saveState() {
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); }
+  catch (e) { /* storage unavailable — keep working in-memory */ }
+}
+
+/* ---------- helpers ---------- */
+function money(n) {
+  n = Math.round(n || 0);
+  return '$' + n.toLocaleString('es-AR');
+}
+function num(v) {
+  if (typeof v === 'string') {
+    const t = v.trim();
+    if (/^\d{1,3}(\.\d{3})+$/.test(t)) v = t.replace(/\./g, '');
+  }
+  const n = parseFloat(v); return isNaN(n) ? 0 : n;
+}
+function fmtMiles(v) {
+  const n = Math.round(num(v));
+  return n ? String(n).replace(/\B(?=(\d{3})+(?!\d))/g, '.') : '';
+}
+// formatea con puntos mientras se escribe (antes de que corra el oninput del campo)
+document.addEventListener('input', e => {
+  const el = e.target;
+  if (!el || !el.classList || !el.classList.contains('money')) return;
+  const pos = el.selectionStart || 0;
+  const digitosAntes = el.value.slice(0, pos).replace(/\D/g, '').length;
+  const digitos = el.value.replace(/\D/g, '').replace(/^0+(?=\d)/, '');
+  const fmt = digitos ? digitos.replace(/\B(?=(\d{3})+(?!\d))/g, '.') : '';
+  el.value = fmt;
+  let cuenta = 0, nuevo = 0;
+  while (nuevo < fmt.length && cuenta < digitosAntes) { if (/\d/.test(fmt[nuevo])) cuenta++; nuevo++; }
+  try { el.setSelectionRange(nuevo, nuevo); } catch (_) {}
+}, true);
+function calcVariable(o) {
+  const manoObra = num(o.jornal) * num(o.personas) * num(o.diasObra);
+  const extraTotal = (o.extraCostos || []).reduce((sum, e) => sum + num(e.monto), 0);
+  const total = num(o.materiales) + manoObra + num(o.fletes) + num(o.alquilerEquipos) + num(o.otrosVar) + num(o.imprevistos) + extraTotal;
+  return { manoObra, extraTotal, total };
+}
+function precioBoxHTML(precio, costoVariable, ingresoVar, labelVar) {
+  precio = num(precio); costoVariable = num(costoVariable); ingresoVar = num(ingresoVar);
+  const margen = precio - costoVariable - ingresoVar;
+  const head = `<div class="precio-box-header"><span>Precio del servicio</span><span class="amt">${money(precio)}</span></div>`;
+  if (margen < 0) {
+    const titulo = precio < costoVariable ? 'No te cubre ni el costo variable'
+      : (labelVar === 'Tu trabajo en este servicio' ? 'No te cubre tu trabajo' : 'No te cubre tu meta de ingresos');
+    const detalle = `Costos variables: ${money(costoVariable)}` + (ingresoVar > 0 ? ` · ${labelVar}: ${money(ingresoVar)}` : '');
+    return `<div class="precio-box">${head}
+      <div class="precio-box-stack">
+        <div class="precio-box-seg seg-warn" style="flex-grow:1;min-height:70px">
+          <span class="seg-label">${titulo}</span>
+          <span class="seg-amt" style="font-size:14px">${detalle}</span>
+        </div>
+      </div>
+    </div>`;
+  }
+  const segs = [
+    { label: 'Margen', value: margen, cls: 'seg-margen', style: '' },
+    { label: labelVar, value: ingresoVar, cls: '', style: 'background:var(--blue);' },
+    { label: 'Costos variables', value: costoVariable, cls: 'seg-variable', style: '' }
+  ].filter((x, i) => i === 0 || i === 2 || x.value > 0.5);
+  return `<div class="precio-box">${head}
+      <div class="precio-box-stack">
+        ${segs.map(x => `<div class="precio-box-seg ${x.cls}" style="${x.style}flex-grow:${Math.max(x.value, 1)};min-height:50px">
+          <span class="seg-label">${x.label}</span><span class="seg-amt">${money(x.value)}</span>
+        </div>`).join('')}
+      </div>
+    </div>`;
+}
+function cubreLabelHTML(precio, costoVariable, ingresoVar, labelVar) {
+  ingresoVar = num(ingresoVar);
+  const margen = num(precio) - num(costoVariable) - ingresoVar;
+  const esTrabajo = labelVar === 'Tu trabajo en este servicio';
+  if (margen >= 0) {
+    let txt;
+    if (ingresoVar > 0 && esTrabajo) txt = `Cubrís tus costos variables y tu trabajo, y te queda un margen de ${money(margen)} para cubrir los gastos fijos.`;
+    else if (ingresoVar > 0) txt = `Cubrís tus costos variables y la parte de tu meta de ingresos de estos días, y te queda un margen de ${money(margen)} para cubrir los gastos fijos.`;
+    else txt = `Cubrís tus costos variables y te queda un margen de ${money(margen)} para cubrir los gastos fijos y tu meta de ingresos.`;
+    return `<div class="banner" style="background:var(--green-bg);color:var(--green)">${txt}</div>`;
+  }
+  const que = ingresoVar > 0 ? (esTrabajo ? 'tus costos variables y tu trabajo' : 'tus costos variables y tu meta de ingresos') : 'los costos variables';
+  return `<div class="banner" style="background:var(--red-bg);color:var(--red)">No cubrís ${que}, te faltan ${money(Math.abs(margen))}. ¿Es posible subir un poco más el precio de referencia?</div>`;
+}
+function calcFijos() {
+  const f = state.fase1;
+  const extraFijosTotal = (f.extraFijos || []).reduce((s, e) => s + num(e.monto), 0);
+  const extraPersonalTotal = (f.extraPersonal || []).reduce((s, e) => s + num(e.monto), 0);
+  const total = num(f.alquilerLocal) + num(f.servicios) + num(f.vehiculo) + num(f.celular) + num(f.seguro) + num(f.comerciales) + num(f.publicidad) + num(f.personalEmpresa) + extraFijosTotal + extraPersonalTotal;
+  const porDia = total / 22;
+  return { total, porDia };
+}
+function trabajaEn(o) {
+  if ('valorHoraTuya' in o) return o.trabajaVos !== undefined ? !!o.trabajaVos : num(o.valorHoraTuya) > 0;
+  return o.trabaja !== undefined ? !!o.trabaja : num(o.sueldoObra) !== 0;
+}
+function pctMeta(x, meta) { return meta > 0 ? Math.round((x / meta) * 100) + '%' : '0%'; }
+/* Tabla "Cómo se calcula tu ingreso por esta obra":
+   Trabaja + Variable → en variables: tu trabajo (horas × días × valor hora, o tu valor por el servicio).
+   Trabaja + Fijo     → en variables: tu trabajo. Si no llega a (meta ÷ 22) × días, la diferencia va a fijos.
+   No trabaja + Variable → en variables: (meta ÷ 22) × días de la obra.
+   No trabaja + Fijo     → en fijos: (meta ÷ 22) × días de la obra. */
+function valorTrabajo(o) {
+  const dias = Math.min(num(o.diasVos), num(o.diasObra));
+  if ('valorHoraTuya' in o) return num(o.horasVos) * dias * num(o.valorHoraTuya); // servicio principal
+  if ('valorHora' in o)     return num(o.horasVos) * dias * num(o.valorHora);     // otros servicios
+  return num(o.sueldoObra);                                                       // servicios viejos guardados
+}
+function calcIngresoObra(o) {
+  const meta = num(state.fase1.metaMensual);
+  const fija = !!state.fase1.metaEsFija;
+  const esPrincipal = 'valorHoraTuya' in o;
+  const trabaja = trabajaEn(o);
+  const ingresoTrabajo = !trabaja ? 0 : valorTrabajo(o);
+  const metaObra = (meta / 22) * num(o.diasObra);
+  let ingreso = 0, extraFijo = 0, labelVar = '', mensaje = '';
+  if (trabaja) {
+    ingreso = ingresoTrabajo;
+    labelVar = 'Tu trabajo en este servicio';
+    if (fija && meta > 0) {
+      const faltante = Math.max(0, metaObra - ingresoTrabajo);
+      if (faltante < 1) {
+        mensaje = `Con el ingreso por trabajar en este servicio cubrís ${pctMeta(ingresoTrabajo, meta)} de tu meta de ingresos mensual.`;
+      } else {
+        extraFijo = faltante;
+        mensaje = `Lo que ganás trabajando en este servicio (${money(ingresoTrabajo)}) es menos de lo que necesitás para alcanzar tu meta en estos días (${money(metaObra)}). Por eso la diferencia, ${money(faltante)}, se suma a los costos fijos.`;
+      }
+    }
+  } else if (meta > 0) {
+    if (!fija) {
+      ingreso = metaObra;
+      labelVar = 'Para tu meta de ingresos';
+      mensaje = `Con este servicio cubrís ${pctMeta(metaObra, meta)} de tu meta de ingresos mensual.`;
+    } else {
+      extraFijo = metaObra;
+      mensaje = `Con este servicio cubrís ${pctMeta(metaObra, meta)} de tu meta de ingresos mensual. Te faltan ${money(Math.max(0, meta - metaObra))} para completarla.`;
+    }
+  }
+  return { trabaja, ingreso, ingresoTrabajo, extraFijo, labelVar, mensaje, metaObra };
+}
+function setMetaEsFija(val) {
+  state.fase1.metaEsFija = val;
+  saveState();
+  render();
+}
+/* Lo que le queda a la persona de cada servicio:
+     queda = precio − costos variables − fijos de esos días
+   y la "vara" contra la que se compara, según trabaje o no y su meta sea fija o variable:
+     Trabaja + variable (o sin meta) → su trabajo
+     Trabaja + fija                  → su ingreso de estos días: el mayor entre su trabajo y la meta de estos días
+     No trabaja + variable           → su parte de la meta de estos días
+     No trabaja + fija               → su ingreso fijo de estos días */
+function calcBolsillo(o) {
+  const f        = state.fase1;
+  const precio   = num(o.precioOjo);
+  const cv       = calcVariable(o).total;
+  const fijos    = calcFijos().porDia * num(o.diasObra);
+  const ing      = calcIngresoObra(o);
+  const trabaja  = ing.trabaja;
+  const trabajo  = ing.ingresoTrabajo;
+  const metaMes  = num(f.metaMensual);
+  const hayMeta  = metaMes > 0;
+  const metaFija = hayMeta && !!f.metaEsFija;
+  const metaObra = ing.metaObra;
+  const queda    = precio - cv - fijos;
+  const costos   = cv + fijos;
+
+  let caso = '', vara = 0, etiqueta = '';
+  if (trabaja && !metaFija)      { caso = 'trabajo';  vara = trabajo;                     etiqueta = 'Tu trabajo'; }
+  else if (trabaja)              { caso = 'ingresoT'; vara = Math.max(trabajo, metaObra); etiqueta = 'Tu ingreso de estos días'; }
+  else if (hayMeta && !metaFija) { caso = 'meta';     vara = metaObra;                    etiqueta = 'Tu parte de la meta'; }
+  else if (hayMeta)              { caso = 'fijo';     vara = metaObra;                    etiqueta = 'Tu ingreso fijo'; }
+
+  const extra = queda - vara;
+  const pct = vara > 0 ? Math.round(Math.max(0, queda) / vara * 100) : 0;
+  const cierreNegocio = extra >= 1 ? ` Y al negocio le quedan ${money(extra)}.` : ' Al negocio no le queda ganancia extra.';
+  let cls, titulo, detalle = '';
+  let trabajoPrimero = false, numeroTP = null, segTP = null;
+
+  if (precio <= 0) {
+    cls = 'even';
+    titulo = 'Todavía no cargaste el precio que pasarías por este servicio.';
+  } else if (precio < cv) {
+    cls = 'loss';
+    titulo = `Perdés plata: con este precio no cubrís ni los gastos del servicio (materiales, mano de obra, fletes). ` +
+      (fijos > 0.5 ? `Y los ${money(fijos)} de fijos de estos días los tenés que cubrir con otros servicios.` : '');
+    if (trabaja && trabajo > 0) detalle = `Además, no te pagás nada por tu trabajo (${money(trabajo)}).`;
+    else if (!trabaja && hayMeta) detalle = `Además, no sacás nada para tu meta de estos días (${money(metaObra)}).`;
+  } else if (trabaja && trabajo > 0 && queda < trabajo) {
+    // si trabaja, lo que deja el servicio (precio − variables) paga PRIMERO su trabajo y después los fijos
+    trabajoPrimero = true;
+    const margen = precio - cv;
+    const pagado = Math.min(margen, trabajo);
+    const fijosCubre = Math.min(fijos, margen - pagado);
+    const fijosFaltan = fijos - fijosCubre;
+    cls = 'even';
+    const metaTxt = metaFija ? 'tu ingreso fijo' : 'tu meta de ingresos';
+    const lineaMeta = !hayMeta ? '' : (pagado >= metaObra
+      ? ` ${pagado >= trabajo ? 'Tu trabajo de estos días' : 'Lo que te pagás'} cubre ${metaFija ? 'todo' : 'toda'} ${metaTxt} de estos días (${money(metaObra)}).`
+      : ` ${pagado >= trabajo ? 'Tu trabajo de estos días' : 'Lo que te pagás'} cubre el ${Math.round(pagado / metaObra * 100)}% de ${metaTxt} de estos días (${money(metaObra)}).`);
+    if (margen < trabajo) {
+      titulo = `Cubrís los gastos del servicio y te pagás ${money(pagado)} de los ${money(trabajo)} que vale tu trabajo (${Math.round(pagado / trabajo * 100)}%).`;
+      detalle = (fijos > 0.5 ? `Los ${money(fijos)} de fijos de estos días los tenés que cubrir con otros servicios.` : '') + lineaMeta;
+      numeroTP = { label: 'Te pagás por tu trabajo', valor: pagado };
+    } else {
+      titulo = `Te pagás tu trabajo completo (${money(trabajo)})` +
+        (fijosCubre >= 1 ? ` y cubrís ${money(fijosCubre)} de tus costos fijos.` : ', pero no te queda nada para los costos fijos.') +
+        ` Los ${money(fijosFaltan)} de fijos que faltan los tenés que cubrir con otros servicios.`;
+      detalle = lineaMeta.trim();
+      numeroTP = { label: 'Fijos que tenés que cubrir con otros servicios', valor: fijosFaltan };
+    }
+    segTP = [
+      { label: 'Tu trabajo', value: pagado, color: 'var(--blue)', pdf: 'blue' },
+      { label: 'Fijos que cubre este servicio', value: fijosCubre, color: 'var(--ochre)', pdf: 'ochre' },
+      { label: 'Fijos que cubren otros servicios', value: fijosFaltan, color: 'var(--ochre-light)', texto: 'var(--brick-dark)', pdf: 'ochreLight' }
+    ];
+    detalle = detalle.trim();
+  } else if (queda < 0) {
+    // no es pérdida: el servicio cubre sus gastos y una parte de los fijos; el resto lo cubren otros servicios
+    cls = 'even';
+    titulo = `Con este precio cubrís los gastos del servicio y ${money(precio - cv)} de tus costos fijos. ` +
+      `Los ${money(-queda)} de fijos que faltan los tenés que cubrir con otros servicios.`;
+    if (trabaja && trabajo > 0) detalle = `Y de este servicio no te queda nada para pagarte tu trabajo (${money(trabajo)}).`;
+    else if (!trabaja && hayMeta) detalle = `Y de este servicio no sacás nada para tu meta de estos días (${money(metaObra)}).`;
+  } else if (vara <= 0) {
+    // no trabaja y no cargó meta, o trabaja pero no cargó el valor de su hora
+    cls = queda > 0 ? 'win' : 'even';
+    titulo = queda > 0 ? `Ganás ${money(queda)}.` : 'Cubrís todos los costos, pero no te queda ganancia.';
+    if (trabaja) detalle = 'Marcaste que trabajás en este servicio: cargá cuánto vale tu hora para ver si te pagás bien.';
+    else if (queda > 0) titulo += ' Cargá tu meta de ingresos para saber si te alcanza.';
+  } else if (extra < 0) {
+    cls = 'even';
+    if (caso === 'trabajo')  titulo = `Te pagás ${money(queda)} de los ${money(trabajo)} que vale tu trabajo (${pct}%).`;
+    if (caso === 'ingresoT') {
+      titulo = `Cubrís ${money(queda)} de los ${money(vara)} de tu ingreso fijo de estos días (${pct}%).`;
+      const porTrabajo = Math.min(queda, trabajo), deGanancia = queda - porTrabajo;
+      detalle = deGanancia >= 1
+        ? `De eso, ${money(porTrabajo)} corresponde a tu trabajo en este servicio y ${money(deGanancia)} sale de la ganancia del negocio para asegurarte tu ingreso fijo.`
+        : (trabajo > 0 && queda < trabajo ? `No alcanza ni para pagarte lo que vale tu trabajo (${money(trabajo)}).` : `Todo corresponde a tu trabajo en este servicio.`);
+      detalle += ` Los ${money(vara - queda)} que faltan los tenés que sacar de otros servicios.`;
+    }
+    if (caso === 'meta')     titulo = `Sacás ${money(queda)} de los ${money(vara)} de tu meta de estos días (${pct}%).`;
+    if (caso === 'fijo')     titulo = `Cubrís ${money(queda)} de los ${money(vara)} de tu ingreso fijo de estos días (${pct}%).`;
+  } else {
+    cls = 'win';
+    if (caso === 'trabajo') {
+      titulo = `Te pagás tu trabajo completo (${money(trabajo)}).` + cierreNegocio;
+    } else if (caso === 'ingresoT') {
+      titulo = `Cubrís tu ingreso fijo de estos días (${money(vara)})` +
+        (metaObra > trabajo ? `: ${money(trabajo)} corresponde a tu trabajo en este servicio y ${money(metaObra - trabajo)} sale de la ganancia del negocio para asegurarte tu ingreso fijo.` : ' con lo que vale tu trabajo.') + cierreNegocio;
+    } else if (caso === 'meta') {
+      titulo = `Sacás tu parte de la meta de estos días (${money(vara)}).` + cierreNegocio;
+    } else {
+      titulo = `Cubrís la parte de tu ingreso fijo que le toca a estos días (${money(vara)}).` + cierreNegocio;
+    }
+  }
+  if (precio > 0 && queda >= 0 && !trabajoPrimero) {
+    // meta variable: se compara solo lo que te pagás por tu trabajo; la ganancia del negocio aparece aparte, como opción
+    if (caso === 'trabajo' && hayMeta && vara > 0) {
+      const pagado = Math.min(queda, trabajo);
+      const falta = metaObra - pagado;
+      const gananciaNeg = Math.max(0, queda - trabajo);
+      const quien = pagado >= trabajo ? 'Tu trabajo de estos días' : 'Lo que te pagás';
+      if (falta < 1) {
+        detalle = `${quien} cubre toda tu meta de ingresos de estos días (${money(metaObra)}).`;
+      } else {
+        detalle = `${quien} cubre el ${Math.round(pagado / metaObra * 100)}% de tu meta de ingresos de estos días (${money(metaObra)}).`;
+        if (gananciaNeg >= falta) detalle += ` Podés usar la ganancia del negocio para cubrir los ${money(falta)} que faltan.`;
+        else if (gananciaNeg >= 1) detalle += ` Si usás la ganancia del negocio (${money(gananciaNeg)}), llegás al ${Math.round((pagado + gananciaNeg) / metaObra * 100)}%.`;
+      }
+    }
+    // no trabaja: lo que se lleva sale todo de la ganancia del negocio
+    if ((caso === 'meta' || caso === 'fijo') && vara > 0) {
+      detalle = 'Como no trabajás en este servicio, todo lo que te llevás sale de la ganancia del negocio.';
+      if (extra < 0) detalle += ` Los ${money(-extra)} que faltan los tenés que sacar de otros servicios.`;
+      if (caso === 'fijo') detalle += ' Ojo: tu ingreso fijo lo cobrás todos los meses, aunque no haya servicios.';
+    }
+  }
+
+  // servicios de más de un mes: avisar por qué la meta y los fijos son de varios meses
+  const dias = num(o.diasObra);
+  let nota = '';
+  if (dias > 22) {
+    const m = Math.round(dias / 22 * 10) / 10;
+    const meses = Number.isInteger(m) ? `${m} meses` : `unos ${m.toLocaleString('es-AR')} meses`;
+    nota = `Este servicio lleva ${dias} días de trabajo: equivale a ${meses}. Por eso los costos fijos${hayMeta ? ' y tu meta' : ''} se calculan por ${meses}.`;
+  }
+
+  const parteVara = Math.min(Math.max(0, queda), vara);
+  const segVariables = { label: 'Costos variables', value: cv, color: 'var(--brick)', texto: '#FBF9F4', pdf: 'brick' };
+  // si el precio no alcanza para todos los fijos, se muestra qué parte cubre y qué parte queda para otros servicios
+  const segFijos = queda < 0
+    ? [{ label: 'Fijos que cubre este servicio', value: Math.max(0, precio - cv), color: 'var(--ochre)', pdf: 'ochre' },
+       { label: 'Fijos que cubren otros servicios', value: Math.min(fijos, -queda), color: 'var(--ochre-light)', texto: 'var(--brick-dark)', pdf: 'ochreLight' }]
+    : [{ label: 'Costo fijo asignado', value: fijos, color: 'var(--ochre)', pdf: 'ochre' }];
+  const segIngreso = { label: etiqueta, value: parteVara, color: 'var(--blue)', pdf: 'blue' };
+  const segGanancia = { label: vara > 0 ? 'Ganancia del negocio' : 'Ganancia', value: Math.max(0, queda - vara), color: 'var(--verde-seg)', pdf: 'green' };
+  let segmentos;
+  if (segTP) segmentos = [segVariables, ...segTP];
+  else if (trabaja && caso === 'ingresoT') {
+    // trabaja + fija: su trabajo va antes de los fijos; lo que completa su ingreso fijo sale de la ganancia, después de los fijos
+    segmentos = [segVariables,
+      { label: 'Tu trabajo', value: Math.min(Math.max(0, queda), trabajo), color: 'var(--blue)', pdf: 'blue' },
+      ...segFijos,
+      { label: 'De la ganancia, para tu ingreso fijo', value: Math.max(0, parteVara - trabajo), color: 'var(--blue-light)', pdf: 'blueLight' },
+      segGanancia];
+  }
+  // si trabaja, en la barra va primero su trabajo y después los fijos
+  else if (trabaja) segmentos = [segVariables, segIngreso, ...segFijos, segGanancia];
+  else segmentos = [segVariables, ...segFijos, segIngreso, segGanancia];
+  segmentos = segmentos.filter(s => s.value > 0.5);
+
+  const numeroLabel = numeroTP ? numeroTP.label : queda >= 0 ? 'Te queda de este servicio'
+    : precio < cv ? 'Con este precio perdés' : 'Fijos que tenés que cubrir con otros servicios';
+  // la pérdida es solo lo que falta para los gastos del servicio; los fijos sin cubrir se muestran aparte
+  const numero = numeroTP ? numeroTP.valor : queda >= 0 ? queda : precio < cv ? cv - precio : -queda;
+
+  return { precio, cv, fijos, queda, costos, caso, vara, etiqueta, trabaja, trabajo, metaObra, cls, titulo, detalle, nota, numeroLabel, numero, segmentos };
+}
+function resumenServicioHTML(o) {
+  const b = calcBolsillo(o);
+  const base = Math.max(b.precio, b.costos, 1);
+  const color = b.cls === 'loss' ? 'red' : b.cls === 'win' ? 'green' : 'yellow';
+  const bar = b.segmentos.map(s => {
+    const pct = (s.value / base) * 100;
+    return `<div class="precio-box-seg" style="flex-grow:${Math.max(s.value, 1)};min-height:64px;background:${s.color}${s.texto ? ';color:' + s.texto : ''}">
+      <span class="seg-label">${s.label}</span>
+      <span class="seg-amt">${money(s.value)}</span>
+      <span class="seg-pct">${pct.toFixed(0)}%</span>
+    </div>`;
+  }).join('');
+  const numero = b.precio <= 0 ? '' : `
+    <div style="text-align:center;margin:4px 0 14px">
+      <div style="font-size:14px;color:var(--muted)">${b.numeroLabel}</div>
+      <div class="display" style="font-size:38px;color:var(--${color})">${money(b.numero)}</div>
+    </div>`;
+  return `${numero}
+    <div class="precio-box">
+      <div class="precio-box-header"><span>Precio del servicio</span><span class="amt">${money(b.precio)}</span></div>
+      <div class="precio-box-stack">${bar}</div>
+    </div>
+    <div class="banner" style="background:var(--${color}-bg);color:var(--${color})">${b.titulo}</div>
+    ${b.detalle ? `<div class="help" style="margin:10px 0 16px">${b.detalle}</div>` : ''}
+    ${b.nota ? `<div class="help" style="margin:10px 0 16px">${b.nota}</div>` : ''}`;
+}
+
+/* ---------- navigation ---------- */
+const FASE1_STEPS = 7; // 0..6
+
+function nextStep() {
+  faltaNombre = false;
+  if (state.step1 < FASE1_STEPS - 1) { state.step1++; }
+  saveState();
+  render();
+  window.scrollTo(0,0);
+}
+function prevStep() {
+  if (state.step1 > 0) state.step1--;
+  saveState();
+  render();
+  window.scrollTo(0,0);
+}
+
+function resetAll() {
+  if (!confirm('¿Seguro? Se borra TODO: tu nombre, tus costos fijos, tu meta y todos tus servicios. No se puede recuperar.')) return;
+  state = JSON.parse(JSON.stringify(defaultState));
+  saveState();
+  render();
+}
+
+/* ---------- field binding ---------- */
+function setPath(path, value) {
+  const parts = path.split('.');
+  let obj = state;
+  for (let i = 0; i < parts.length - 1; i++) obj = obj[parts[i]];
+  const last = parts[parts.length - 1];
+  const isText = typeof obj[last] === 'string';
+  obj[last] = isText ? value : num(value);
+  saveState();
+}
+function getPath(path) {
+  return path.split('.').reduce((o,k) => o[k], state);
+}
+
+/* ---------- render ---------- */
+function render() {
+  if (state.step1 > FASE1_STEPS - 1) state.step1 = FASE1_STEPS - 1;
+  const main = document.getElementById('main');
+  main.innerHTML = renderFase1();
+
+  const curStep = state.step1;
+  const btnBack = document.getElementById('btn-back');
+  const btnNext = document.getElementById('btn-next');
+  btnBack.style.visibility = (curStep === 0) ? 'hidden' : 'visible';
+  btnNext.disabled = false;
+
+  if (curStep === FASE1_STEPS - 1) {
+    btnNext.textContent = 'Listo';
+    btnNext.disabled = true;
+  } else {
+    btnNext.textContent = 'Siguiente';
+  }
+  liveUpdate();
+}
+
+function progressDots(total, current) {
+  let html = '<div class="step-progress">';
+  for (let i = 0; i < total; i++) {
+    html += `<div class="dot ${i < current ? 'done' : ''} ${i === current ? 'current' : ''}"></div>`;
+  }
+  html += '</div>';
+  return html;
+}
+
+/* ---- FASE 1 steps ---- */
+function renderFase1() {
+  const f = state.fase1;
+  const s = state.step1;
+  const T = FASE1_STEPS - 1; // pasos numerados (el último es el cierre)
+  const eb = n => `<div class="eyebrow">Paso ${n} de ${T}</div>`;
+  let body = '';
+
+  if (s === 0) {
+    const trab = trabajaEn(f);
+    body = `
+      ${eb(1)}
+      <h2 class="step-title">Elegí un servicio para costear</h2>
+      <p class="step-sub">Pensá en un trabajo que hiciste hace poco (o uno típico tuyo). Vamos a costearlo juntos, paso a paso.</p>
+      <div class="card">
+        ${nombreFieldHTML()}
+        <div class="field" style="margin-bottom:0">
+          <label>¿Qué servicio vas a costear?</label>
+          <div class="help">Por ejemplo: "reforma de baño", "poda de jardín", "mueble de cocina"</div>
+          <input type="text" value="${escapeHtml(f.obraNombre)}" placeholder="Nombre del trabajo"
+            oninput="setPath('fase1.obraNombre', this.value)">
+        </div>
+      </div>
+      <div class="card">
+        <div class="field"><label>¿Cuántos días de trabajo te lleva el servicio?</label><div class="help">Contá solo los días en que se trabaja en él, no los días corridos.</div>${stepperInline('fase1.diasObra', 1, 90)}</div>
+        <div class="field" style="margin-bottom:0"><label>¿Cuántas personas (sin contarte a vos) trabajan en promedio por día?</label>${stepperInline('fase1.personas', 0, 20)}</div>
+      </div>
+      <div class="card">
+        ${siNoHTML('¿Trabajás vos en este servicio?', trab, 'setTrabajaVos(true)', 'setTrabajaVos(false)',
+          'Sí, trabajo en este servicio', 'No, lo hacen otras personas')}
+        ${trab ? `
+        <div class="field"><label>¿Cuántos días trabajás VOS en este servicio?</label>${stepperInline('fase1.diasVos', 1, num(f.diasObra))}</div>
+        <div class="field"><label>¿Cuántas horas por día trabajás en este servicio (promedio)?</label>${stepperInline('fase1.horasVos', 1, 14)}</div>
+        ${moneyField('fase1.valorHoraTuya', '¿Cuánto vale tu hora de trabajo?', 'Lo que te pagarías a vos por cada hora en este servicio')}` : ''}
+      </div>
+      <div class="card">
+        ${moneyField('fase1.precioOjo', '¿Qué precio pasarías por este servicio?', 'Considerá un presupuesto promedio, teniendo en cuenta todos los datos que cargaste antes')}
+      </div>
+      <div class="card">
+        <h3 class="card-title">Tu meta de ingresos mensual</h3>
+        ${moneyField('fase1.metaMensual', '¿Cuánto necesitás ganar por mes, aprox?', 'Pensalo como lo que te pagarías a vos por mes. Aunque no lo recibas todos los meses, poné un valor objetivo.')}
+        <div class="field" style="margin-bottom:0">
+          <label>¿Cómo lo considerás?</label>
+          <div class="check-row ${!f.metaEsFija ? 'selected' : ''}" style="margin-bottom:10px" onclick="setMetaEsFija(false)">
+            <span class="check-box ${!f.metaEsFija ? 'checked' : ''}">${!f.metaEsFija ? '✓' : ''}</span>
+            <span class="txt">Es un costo variable — voy cobrando un poco de cada servicio: algunos meses estoy por encima de la meta y otros por debajo</span>
+          </div>
+          <div class="check-row ${f.metaEsFija ? 'selected' : ''}" onclick="setMetaEsFija(true)">
+            <span class="check-box ${f.metaEsFija ? 'checked' : ''}">${f.metaEsFija ? '✓' : ''}</span>
+            <span class="txt">Es un costo fijo — me aseguro ese valor todos los meses, independientemente de la cantidad de servicios que haga</span>
+          </div>
+        </div>
+      </div>`;
+  }
+
+  if (s === 1) {
+    const ing = calcIngresoObra(f);
+    body = `
+      ${eb(2)}
+      <h2 class="step-title">Costos variables</h2>
+      <p class="step-sub">Todo lo que gastás únicamente porque hiciste ESTE servicio. Si no lo hubieras tomado, este gasto no existiría.</p>
+      <div class="card card-tint-red">
+        ${moneyField('fase1.materiales', 'Materiales', 'Lo que compraste para este servicio puntual')}
+        ${moneyField('fase1.fletes', 'Fletes / nafta', '')}
+        ${moneyField('fase1.alquilerEquipos', 'Alquiler de equipos', 'Si alquilaste alguna herramienta o máquina para este servicio')}
+        ${moneyField('fase1.otrosVar', 'Otros gastos', 'Algo que compraste de apuro')}
+        ${moneyField('fase1.imprevistos', 'Caja chica para imprevistos', 'Un colchón por si algo sale mal')}
+        <div class="field">
+          <label>¿Tenés otro gasto para este servicio?</label>
+          <div class="help">Agregá los que necesites, con su nombre y monto</div>
+          ${listaHTML('fase1.extraCostos', 'Nombre del gasto')}
+          <button class="add-extra-btn" onclick="addItem('fase1.extraCostos')">+ Agregar otro gasto</button>
+        </div>
+        <div class="field-group">
+          ${moneyField('fase1.jornal', 'Jornal (día) de una persona', 'Multiplicamos esto por las personas y los días del servicio')}
+          <div class="subtotal-row">
+            <span class="label">Mano de obra (jornal × personas × días)</span>
+            <span class="amt" id="live-manoobra">${money(0)}</span>
+          </div>
+        </div>
+        <div class="subtotal-row result">
+          <span class="label">Total costo variable</span>
+          <span class="amt" id="live-variable-total">${money(0)}</span>
+        </div>
+      </div>`;
+  }
+
+  if (s === 2) {
+    const cv = calcVariable(f).total;
+    const ing = calcIngresoObra(f);
+    body = `
+      ${eb(3)}
+      <h2 class="step-title">¿Te alcanza lo que cobrás?</h2>
+      ${precioBoxHTML(f.precioOjo, cv, 0, '')}
+      ${trabajaEn(f) && num(f.precioOjo) >= cv
+        ? `<div class="banner" style="background:var(--green-bg);color:var(--green)">Cubrís tus costos variables y te queda un margen de ${money(num(f.precioOjo) - cv)} para pagarte tu trabajo y después cubrir los gastos fijos.</div>`
+        : cubreLabelHTML(f.precioOjo, cv, 0, '')}`;
+  }
+
+  if (s === 3) {
+    ensurePersonal();
+    body = `
+      ${eb(4)}
+      <h2 class="step-title">Costos fijos</h2>
+      <p class="step-sub">Lo que pagás exista o no exista servicio este mes. Escribí los montos — no hace falta que sea exacto.</p>
+      <div class="card">
+        ${moneyField('fase1.alquilerLocal', 'Alquiler de local, taller o depósito', '')}
+        ${moneyField('fase1.servicios', 'Servicios (luz, gas, internet)', '')}
+        ${moneyField('fase1.vehiculo', 'Mantenimiento del vehículo', '')}
+        ${moneyField('fase1.celular', 'Celular', '')}
+        ${moneyField('fase1.seguro', 'Seguro', '')}
+        ${moneyField('fase1.comerciales', 'Gastos comerciales', '')}
+        ${moneyField('fase1.publicidad', 'Publicidad', '')}
+        <div class="field">
+          <label>¿Tenés otro costo fijo?</label>
+          <div class="help">Agregá los que necesites, con su nombre y monto</div>
+          ${renderExtraFijosHTML()}
+          <button class="add-extra-btn" onclick="addExtraFijo()">+ Agregar otro costo fijo</button>
+        </div>
+        <div class="field-group" style="margin-bottom:18px">
+          <div class="field" style="margin-bottom:10px">
+            <label>¿Trabajás con alguien más que cobre fijo?</label>
+            <div class="help">Contador, administrador, ayudante, redes sociales, etc. Poné el nombre o rol de cada uno y cuánto le pagás por mes.</div>
+          </div>
+          ${listaHTML('fase1.extraPersonal', 'Nombre o rol')}
+          <button class="add-extra-btn" onclick="addItem('fase1.extraPersonal')">+ Agregar otra persona</button>
+        </div>
+        <div class="subtotal-row">
+          <span class="label">Total de fijos por mes</span>
+          <span class="amt" id="live-fijos-total">${money(0)}</span>
+        </div>
+        <div class="subtotal-row">
+          <span class="label">Costo fijo por día (÷ 22 días)</span>
+          <span class="amt" id="live-fijos-dia">${money(0)}</span>
+        </div>
+      </div>`;
+  }
+
+  if (s === 4) {
+    body = `
+      ${eb(5)}
+      <h2 class="step-title">Este es el análisis de tu servicio</h2>
+      ${resumenServicioHTML(f)}`;
+  }
+
+  if (s === 5) {
+    const list = f.extras || [];
+    body = `
+      ${eb(6)}
+      <h2 class="step-title">Cargá otros servicios</h2>
+      <p class="step-sub">Tus costos fijos y tu meta de ingresos ya los tenemos. Cargá cada servicio que quieras sumar, igual que el primero.</p>
+      ${list.map((e, idx) => renderExtraServicioCard(e, idx)).join('')}
+      <button class="add-extra-btn" onclick="addExtraServicio()">+ Agregar otro servicio</button>`;
+  }
+
+  if (s === 6) {
+    const extrasList = f.extras || [];
+    body = `
+      <div class="eyebrow">Cierre</div>
+      <h2 class="step-title">Comparación de tus servicios</h2>
+      <p class="step-sub">Así se ve, uno al lado del otro, cada servicio que cargaste.</p>
+      <div class="field" style="margin-bottom:8px">
+        <label style="margin-bottom:0">${escapeHtml(f.obraNombre) || 'Tu servicio principal'}</label>
+      </div>
+      ${resumenServicioHTML(f)}
+      ${extrasList.map(e => `<div class="field" style="margin-bottom:8px"><label style="margin-bottom:0">${escapeHtml(e.nombre) || 'Servicio sin nombre'}</label></div>` +
+        resumenServicioHTML(e)).join('')}
+      ${envioCardHTML()}
+      <button class="reset-link" onclick="resetAll()">Borrar todo y empezar de cero</button>`;
+  }
+
+  return progressDots(FASE1_STEPS, s) + body;
+}
+
+/* ---- Paso 2 helpers: gastos personalizados ---- */
+function ensureList(path) {
+  const parts = path.split('.');
+  let o = state;
+  for (let i = 0; i < parts.length - 1; i++) o = o[parts[i]];
+  const k = parts[parts.length - 1];
+  if (!Array.isArray(o[k])) o[k] = [];
+  return o[k];
+}
+function moneyInputHTML(value, js) {
+  return `<div class="money-input"><span>$</span><input type="text" inputmode="numeric" class="money" autocomplete="off" placeholder="0" value="${fmtMiles(value)}" oninput="${js}"></div>`;
+}
+function listaHTML(path, placeholder) {
+  return ensureList(path).map((e, i) => `
+    <div class="extra-costo-row">
+      <input type="text" value="${escapeHtml(e.nombre)}" placeholder="${placeholder}" oninput="setItemField('${path}', ${i}, 'nombre', this.value)">
+      ${moneyInputHTML(e.monto, `setItemField('${path}', ${i}, 'monto', this.value)`)}
+      <button class="remove-extra-costo" onclick="removeItem('${path}', ${i})">✕</button>
+    </div>`).join('');
+}
+function addItem(path) { ensureList(path).push({ nombre: '', monto: 0 }); saveState(); render(); }
+function removeItem(path, i) { ensureList(path).splice(i, 1); saveState(); render(); }
+function setItemField(path, i, field, value) {
+  const it = ensureList(path)[i];
+  if (!it) return;
+  it[field] = field === 'nombre' ? value : num(value);
+  saveState();
+  liveUpdate();
+}
+function ensurePersonal() {
+  const f = state.fase1;
+  const lista = ensureList('fase1.extraPersonal');
+  if (num(f.personalEmpresa) > 0) { lista.unshift({ nombre: '', monto: num(f.personalEmpresa) }); f.personalEmpresa = 0; saveState(); }
+  if (!lista.length) lista.push({ nombre: '', monto: 0 });
+}
+function siNoHTML(pregunta, on, onYes, onNo, txtSi, txtNo) {
+  return `<div class="field">
+      <label>${pregunta}</label>
+      <div class="check-row ${on ? 'selected' : ''}" style="margin-bottom:10px" onclick="${onYes}">
+        <span class="check-box ${on ? 'checked' : ''}">${on ? '✓' : ''}</span><span class="txt">${txtSi}</span>
+      </div>
+      <div class="check-row ${!on ? 'selected' : ''}" onclick="${onNo}">
+        <span class="check-box ${!on ? 'checked' : ''}">${!on ? '✓' : ''}</span><span class="txt">${txtNo}</span>
+      </div>
+    </div>`;
+}
+function setTrabajaVos(v) {
+  const f = state.fase1;
+  f.trabajaVos = v;
+  if (v && !num(f.diasVos)) f.diasVos = num(f.diasObra) || 1;
+  saveState(); render();
+}
+function setExtraTrabaja(idx, v) {
+  const e = state.fase1.extras[idx];
+  if (!e) return;
+  e.trabaja = v;
+  if (v && !num(e.diasVos)) e.diasVos = num(e.diasObra) || 1;
+  saveState(); render();
+}
+
+/* ---- Paso 5 helpers: fijos y personal personalizados ---- */
+function renderExtraFijosHTML() {
+  const items = state.fase1.extraFijos || [];
+  if (!items.length) return '';
+  return items.map((e, i) => `
+    <div class="extra-costo-row">
+      <input type="text" value="${escapeHtml(e.nombre)}" placeholder="Nombre del costo" oninput="setExtraFijoField(${i}, 'nombre', this.value)">
+      <div class="money-input"><span>$</span><input type="text" inputmode="numeric" class="money" autocomplete="off" placeholder="0" value="${fmtMiles(e.monto)}" oninput="setExtraFijoField(${i}, 'monto', this.value)"></div>
+      <button class="remove-extra-costo" onclick="removeExtraFijo(${i})">✕</button>
+    </div>`).join('');
+}
+function addExtraFijo() {
+  if (!state.fase1.extraFijos) state.fase1.extraFijos = [];
+  state.fase1.extraFijos.push({ nombre: '', monto: 0 });
+  saveState();
+  render();
+}
+function removeExtraFijo(i) {
+  state.fase1.extraFijos.splice(i, 1);
+  saveState();
+  render();
+}
+function setExtraFijoField(i, field, value) {
+  const item = state.fase1.extraFijos[i];
+  if (!item) return;
+  item[field] = field === 'nombre' ? value : num(value);
+  saveState();
+  liveUpdate();
+}
+
+/* ---- Paso 7 helpers: otros servicios (variable, cantidad libre) ---- */
+function renderExtraServicioCard(e, idx) {
+  if (!Array.isArray(e.extraCostos)) e.extraCostos = [];
+  if (!('valorHora' in e)) {
+    const d = Math.max(1, num(e.diasObra));
+    e.diasVos = d; e.horasVos = 8;
+    e.valorHora = num(e.sueldoObra) > 0 ? Math.round(num(e.sueldoObra) / (8 * d)) : 0;
+  }
+  if (num(e.diasVos) > num(e.diasObra)) e.diasVos = num(e.diasObra);
+  const p = 'fase1.extras.' + idx;
+  const v = calcVariable(e);
+  const ing = calcIngresoObra(e);
+  const trab = trabajaEn(e);
+  return `
+    <div class="card card-tint-red" style="position:relative">
+      <button class="remove-extra-costo" style="position:absolute;top:14px;right:14px;font-size:20px" onclick="removeExtraServicio(${idx})">✕</button>
+      <div class="field">
+        <label>¿Qué servicio es?</label>
+        <input type="text" value="${escapeHtml(e.nombre)}" placeholder="Ej: poda de jardín" oninput="setPath('${p}.nombre', this.value)">
+      </div>
+      <div class="field"><label>¿Cuántos días de trabajo te lleva el servicio?</label><div class="help">Contá solo los días en que se trabaja en él, no los días corridos.</div>${stepperInline(p + '.diasObra', 1, 90)}</div>
+      <div class="field"><label>¿Cuántas personas (sin contarte a vos) trabajan en promedio por día?</label>${stepperInline(p + '.personas', 0, 20)}</div>
+      ${siNoHTML('¿Trabajás vos en este servicio?', trab, `setExtraTrabaja(${idx}, true)`, `setExtraTrabaja(${idx}, false)`,
+        'Sí, trabajo en este servicio', 'No, lo hacen otras personas')}
+      ${trab ? `
+        <div class="field"><label>¿Cuántos días trabajás VOS en este servicio?</label>${stepperInline(p + '.diasVos', 1, num(e.diasObra))}</div>
+        <div class="field"><label>¿Cuántas horas por día trabajás en este servicio (promedio)?</label>${stepperInline(p + '.horasVos', 1, 14)}</div>
+        ${moneyField(p + '.valorHora', '¿Cuánto vale tu hora de trabajo?', 'Lo que te pagarías a vos por cada hora en este servicio')}` : ''}
+      ${moneyField(p + '.precioOjo', '¿Qué precio pasarías por este servicio?', 'Considerá un presupuesto promedio, teniendo en cuenta todos los datos que cargaste')}
+      <h3 class="card-title" style="margin-top:6px">Costos variables</h3>
+      ${moneyField(p + '.materiales', 'Materiales', 'Lo que comprás para este servicio puntual')}
+      ${moneyField(p + '.fletes', 'Fletes / nafta', '')}
+      ${moneyField(p + '.alquilerEquipos', 'Alquiler de equipos', 'Si alquilás alguna herramienta o máquina para este servicio')}
+      ${moneyField(p + '.otrosVar', 'Otros gastos', 'Algo que comprás de apuro')}
+      ${moneyField(p + '.imprevistos', 'Caja chica para imprevistos', 'Un colchón por si algo sale mal')}
+      <div class="field">
+        <label>¿Tenés otro gasto para este servicio?</label>
+        <div class="help">Agregá los que necesites, con su nombre y monto</div>
+        ${listaHTML(p + '.extraCostos', 'Nombre del gasto')}
+        <button class="add-extra-btn" onclick="addItem('${p}.extraCostos')">+ Agregar otro gasto</button>
+      </div>
+      <div class="field-group">
+        ${moneyField(p + '.jornal', 'Jornal (día) de una persona', 'Multiplicamos esto por las personas y los días del servicio')}
+        <div class="subtotal-row">
+          <span class="label">Mano de obra (jornal × personas × días)</span>
+          <span class="amt" id="ex-manoobra-${idx}">${money(v.manoObra)}</span>
+        </div>
+      </div>
+      <div class="subtotal-row result">
+        <span class="label">Total costo variable</span>
+        <span class="amt" id="ex-total-${idx}">${money(v.total)}</span>
+      </div>
+    </div>`;
+}
+function addExtraServicio() {
+  if (!state.fase1.extras) state.fase1.extras = [];
+  state.fase1.extras.push(defaultExtra(''));
+  saveState();
+  render();
+}
+function removeExtraServicio(idx) {
+  state.fase1.extras.splice(idx, 1);
+  saveState();
+  render();
+}
+
+/* ---------- field templates ---------- */
+function moneyField(path, label, help) {
+  const val = getPath(path);
+  return `
+    <div class="field">
+      <label>${label}</label>
+      ${help ? `<div class="help">${help}</div>` : ''}
+      <div class="money-input">
+        <span>$</span>
+        <input type="text" inputmode="numeric" class="money" autocomplete="off" placeholder="0" value="${fmtMiles(val)}" oninput="setPath('${path}', this.value); liveUpdate();">
+      </div>
+    </div>`;
+}
+function stepperInline(path, min, max) {
+  const val = getPath(path);
+  const idSafe = path.replace(/\./g, '-');
+  return `
+    <div class="stepper-inline">
+      <button onclick="stepPath('${path}', -1, ${min}, ${max})">−</button>
+      <span class="val" id="stepval-${idSafe}">${val}</span>
+      <button onclick="stepPath('${path}', 1, ${min}, ${max})">+</button>
+    </div>`;
+}
+function stepPath(path, delta, min, max) {
+  const cur = getPath(path);
+  const next = Math.min(max, Math.max(min, cur + delta));
+  setPath(path, next);
+  // al cambiar los días del servicio: recortar "días que trabajás vos" y redibujar para actualizar su tope
+  if (/\.diasObra$/.test(path)) {
+    const o = getPath(path.replace(/\.diasObra$/, ''));
+    if (num(o.diasVos) > next) o.diasVos = next;
+    saveState();
+    render();
+    return;
+  }
+  const idSafe = path.replace(/\./g, '-');
+  const el = document.getElementById('stepval-' + idSafe);
+  if (el) el.textContent = next;
+  liveUpdate();
+}
+
+/* ---------- live totals (no full re-render) ---------- */
+function liveUpdate() {
+  const varCalc = calcVariable(state.fase1);
+  setText('live-manoobra', money(varCalc.manoObra));
+  setText('live-variable-total', money(varCalc.total));
+
+  const fijos = calcFijos();
+  setText('live-fijos-total', money(fijos.total));
+  setText('live-fijos-dia', money(fijos.porDia));
+
+  (state.fase1.extras || []).forEach((ex, idx) => {
+    const calc = calcVariable(ex);
+    setText('ex-manoobra-' + idx, money(calc.manoObra));
+    setText('ex-total-' + idx, money(calc.total));
+  });
+}
+function setText(id, txt) { const el = document.getElementById(id); if (el) el.textContent = txt; }
+function escapeHtml(s) { return (s || '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+
+/* ---------- nombre y resumen ---------- */
+/* La Libretita: sin lista de participantes ni envío a planilla. Todo queda en el celular. */
+let faltaNombre = false;
+let envioEnCurso = false;
+
+function nombreActual() { return (state.fase1.nombreParticipante || '').trim(); }
+function nombreFieldHTML() {
+  return `
+    <div class="field">
+      <label for="nombre-input">Tu nombre o el de tu negocio <span style="font-weight:400">(opcional)</span></label>
+      <div class="help">Aparece en el resumen en PDF.</div>
+      <input type="text" id="nombre-input" autocomplete="organization" value="${escapeHtml(state.fase1.nombreParticipante)}"
+        placeholder="Ej: Jardinería Alvarez" oninput="setPath('fase1.nombreParticipante', this.value)">
+    </div>`;
+}
+
+function armarDatosExcel() {
+  const f = state.fase1;
+  const principal = {
+    nombre: f.obraNombre,
+    precio: num(f.precioOjo), dias: num(f.diasObra), personas: num(f.personas), jornal: num(f.jornal),
+    materiales: num(f.materiales), fletes: num(f.fletes), alquilerEquipos: num(f.alquilerEquipos),
+    otrosVar: num(f.otrosVar), imprevistos: num(f.imprevistos),
+    otrosAgregados: (f.extraCostos || []).reduce((a, e) => a + num(e.monto), 0),
+    detalleAgregados: (f.extraCostos || []).map(e => ({ nombre: e.nombre || '', monto: num(e.monto) })),
+    trabaja: trabajaEn(f),
+    diasVos: trabajaEn(f) ? Math.min(num(f.diasVos), num(f.diasObra)) : 0, horasVos: trabajaEn(f) ? num(f.horasVos) : 0,
+    valorHora: trabajaEn(f) ? num(f.valorHoraTuya) : 0,
+    ingresoPropio: calcIngresoObra(f).ingresoTrabajo
+  };
+  const extras = (f.extras || []).filter(e =>
+    (e.nombre || '').trim() || num(e.precioOjo) || num(e.materiales) || num(e.jornal)
+  ).map(e => ({
+    nombre: e.nombre,
+    precio: num(e.precioOjo), dias: num(e.diasObra), personas: num(e.personas), jornal: num(e.jornal),
+    materiales: num(e.materiales), fletes: num(e.fletes), alquilerEquipos: num(e.alquilerEquipos),
+    otrosVar: num(e.otrosVar), imprevistos: num(e.imprevistos),
+    otrosAgregados: (e.extraCostos || []).reduce((a, x) => a + num(x.monto), 0),
+    detalleAgregados: (e.extraCostos || []).map(x => ({ nombre: x.nombre || '', monto: num(x.monto) })),
+    trabaja: trabajaEn(e),
+    diasVos: trabajaEn(e) ? Math.min(num(e.diasVos), num(e.diasObra)) : 0, horasVos: trabajaEn(e) ? num(e.horasVos) : 0,
+    valorHora: trabajaEn(e) ? num(e.valorHora) : 0,
+    ingresoPropio: calcIngresoObra(e).ingresoTrabajo
+  }));
+  const fijos = [
+    ['Alquiler de local, taller o depósito', f.alquilerLocal],
+    ['Servicios (luz, gas, internet)', f.servicios],
+    ['Mantenimiento del vehículo', f.vehiculo],
+    ['Celular', f.celular],
+    ['Seguro', f.seguro],
+    ['Gastos comerciales', f.comerciales],
+    ['Publicidad', f.publicidad],
+    ['Personal que cobra fijo', f.personalEmpresa]
+  ].map(([rubro, monto]) => ({ rubro, monto: num(monto) }))
+   .concat((f.extraFijos || []).map(e => ({ rubro: e.nombre || 'Otro costo fijo', monto: num(e.monto) })))
+   .concat((f.extraPersonal || []).map(e => ({ rubro: 'Personal: ' + (e.nombre || 'sin nombre'), monto: num(e.monto) })))
+   .filter(x => x.monto > 0);
+  return {
+    nombre: nombreActual(),
+    servicios: [principal].concat(extras),
+    fijos,
+    sueldoMensual: num(f.metaMensual),
+    sueldoEsFijo: !!f.metaEsFija
+  };
+}
+function firmaDatos(d) { return JSON.stringify(d); }
+
+function envioCardHTML() {
+  return `<div class="card envio-card">
+    <h3>Tu resumen</h3>
+    <p>Descargá un PDF con el resumen de tus servicios: qué parte del precio se va en cada cosa y cuánto te queda.</p>
+    <button class="btn btn-ghost" style="width:100%" onclick="descargarMiPDF(this)">Descargar mi resumen (PDF)</button>
+  </div>
+  <div class="charla"><div>
+    <h3>¿Lo vemos juntos?</h3>
+    <p style="margin:0">Con estos números podemos ayudarte a ajustar tus precios y armar un plan. Mery &amp; Lula.</p>
+    <a href="https://lalibretita.com/#contacto">Escribinos →</a>
+  </div></div>`;
+}
+function refrescarEnvioCard() {
+  const card = document.querySelector('.envio-card');
+  if (!card) return;
+  const tmp = document.createElement('div');
+  tmp.innerHTML = envioCardHTML();
+  card.replaceWith(tmp.firstElementChild);
+}
+/* ---------- resumen en PDF ---------- */
+function pesosPDF(n) {
+  const v = Math.round(num(n));
+  const s = String(Math.abs(v)).replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+  return (v < 0 ? '-$' : '$') + s;
+}
+function generarPDFResumen() {
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF({ unit: 'mm', format: 'a4' });
+  const f = state.fase1;
+  const W = 210, M = 16, CW = W - 2 * M;
+  const COL = {
+    brick: [27, 42, 74], ochre: [237, 231, 126], blue: [169, 200, 232], blueLight: [211, 227, 243], ochreLight: [246, 242, 200], green: [143, 198, 154],
+    red: [179, 54, 26], brickDark: [15, 26, 48], ink: [27, 42, 74], muted: [74, 84, 112],
+    card: [251, 249, 244], edge: [27, 42, 74], redBg: [251, 224, 214], greenBg: [220, 235, 221], yellowBg: [246, 242, 200],
+    textoVerde: [47, 107, 74], textoAmarillo: [94, 83, 0], celesteMarca: [169, 200, 232]
+  };
+  const color = (c, t) => t === 'fill' ? doc.setFillColor(...c) : t === 'draw' ? doc.setDrawColor(...c) : doc.setTextColor(...c);
+  const font = (size, style) => { doc.setFont('helvetica', style || 'normal'); doc.setFontSize(size); };
+  let y = 0;
+
+  const pie = () => {
+    font(8); color(COL.muted);
+    doc.text('La Libretita · Calculadora de costos y precios · lalibretita.com', M, 289);
+    doc.text(String(doc.getNumberOfPages()), W - M, 289, { align: 'right' });
+  };
+  const nuevaPagina = () => { pie(); doc.addPage(); y = 18; };
+  const hayLugar = alto => { if (y + alto > 278) nuevaPagina(); };
+
+  // encabezado
+  color(COL.brick, 'fill'); doc.rect(0, 0, W, 30, 'F');
+  color([255, 255, 255]); font(9, 'bold'); doc.text('LA LIBRETITA · CALCULADORA DE COSTOS', M, 12);
+  font(20, 'bold'); doc.text('Resumen de costos y precios', M, 23);
+  y = 42;
+  color(COL.ink); font(15, 'bold'); doc.text(nombreActual() || 'Tu negocio', M, y);
+  font(9); color(COL.muted);
+  doc.text(new Date().toLocaleDateString('es-AR', { day: 'numeric', month: 'long', year: 'numeric' }), W - M, y, { align: 'right' });
+  y += 9;
+
+  // tu base
+  const fijos = calcFijos();
+  const cajas = [
+    ['Costos fijos por mes', pesosPDF(fijos.total), ''],
+    ['Costo fijo por día (fijos / 22)', pesosPDF(fijos.porDia), ''],
+    ['Tu meta de ingresos', pesosPDF(f.metaMensual), f.metaEsFija ? 'por mes, como costo fijo' : 'por mes, como costo variable']
+  ];
+  const cw = (CW - 8) / 3;
+  cajas.forEach(([t, v, sub], k) => {
+    const x = M + k * (cw + 4);
+    color(COL.card, 'fill'); color(COL.edge, 'draw'); doc.setLineWidth(0.3);
+    doc.roundedRect(x, y, cw, 22, 2, 2, 'FD');
+    font(8); color(COL.muted); doc.text(t, x + 4, y + 6.5);
+    font(13, 'bold'); color(COL.ink); doc.text(v, x + 4, y + 14);
+    if (sub) { font(7); color(COL.muted); doc.text(sub, x + 4, y + 19); }
+  });
+  y += 32;
+
+  // servicios
+  const servicios = [f].concat(f.extras || []);
+  servicios.forEach((o, idx) => {
+    const b = calcBolsillo(o);
+    const e = { tag: b.titulo, cls: b.cls, totalNecesario: b.costos };
+    const msg = (b.precio > 0 ? (b.numeroLabel + ': ') + pesosPDF(b.numero) + '. ' : '') + b.detalle + (b.nota ? ' ' + b.nota : '');
+    const v = calcVariable(o);
+    const nombre = (idx === 0 ? f.obraNombre : o.nombre) || (idx === 0 ? 'Tu servicio principal' : 'Servicio sin nombre');
+    const visibles = b.segmentos.map(x => [x.label, x.value, COL[x.pdf]]);
+    const lineasLeyenda = Math.ceil(visibles.length / 2);
+    font(9);
+    const tagLines = doc.splitTextToSize(e.tag, CW - 10);
+    const msgLines = msg ? doc.splitTextToSize(msg, CW) : [];
+    const detalle = [
+      ['materiales', o.materiales], ['mano de obra', v.manoObra], ['fletes / nafta', o.fletes],
+      ['alquiler de equipos', o.alquilerEquipos], ['otros gastos', o.otrosVar], ['imprevistos', o.imprevistos],
+      ['otros gastos agregados', v.extraTotal]
+    ].filter(x => num(x[1]) > 0).map(x => `${x[0]} ${pesosPDF(x[1])}`).join(' · ');
+    font(8);
+    const detLines = detalle ? doc.splitTextToSize('Costos variables: ' + detalle, CW) : [];
+    const alto = 5 + 18 + lineasLeyenda * 6 + 2 + tagLines.length * 4.5 + 10 + (detLines.length ? detLines.length * 4 + 1.5 : 0) + msgLines.length * 4.6 + 6;
+    hayLugar(alto);
+
+    // título + precio
+    font(13, 'bold'); color(COL.ink); doc.text(nombre, M, y);
+    font(9); color(COL.muted); doc.text('Precio', W - M - 38, y, { align: 'right' });
+    font(13, 'bold'); color(COL.ink); doc.text(pesosPDF(b.precio), W - M, y, { align: 'right' });
+    y += 5;
+
+    // barra apilada
+    const base = Math.max(b.precio, e.totalNecesario, 1);
+    let x = M;
+    visibles.forEach(([, val, col]) => {
+      const w = (val / base) * CW;
+      color(col, 'fill'); doc.rect(x, y, w, 10, 'F');
+      x += w;
+    });
+    if (e.totalNecesario > b.precio && b.precio > 0) {
+      const px = M + (b.precio / base) * CW;
+      color(COL.ink, 'draw'); doc.setLineWidth(0.6); doc.line(px, y - 1.5, px, y + 11.5);
+      font(7, 'bold'); color(COL.ink); doc.text('tu precio', px, y + 14.5, { align: 'center' });
+    }
+    y += 18;
+
+    // leyenda en dos columnas
+    visibles.forEach(([lab, val, col], k) => {
+      const lx = M + (k % 2) * (CW / 2);
+      const ly = y + Math.floor(k / 2) * 6;
+      color(col, 'fill'); doc.rect(lx, ly - 3, 3.5, 3.5, 'F');
+      font(9); color(COL.ink); doc.text(lab, lx + 5.5, ly);
+      font(9, 'bold'); doc.text(pesosPDF(val), lx + CW / 2 - 6, ly, { align: 'right' });
+    });
+    y += lineasLeyenda * 6 + 2;
+
+    // estado (mensaje de color)
+    const bg = e.cls === 'loss' ? COL.redBg : e.cls === 'win' ? COL.greenBg : COL.yellowBg;
+    const fg = e.cls === 'loss' ? COL.red : e.cls === 'win' ? COL.textoVerde : COL.textoAmarillo;
+    const hBanner = tagLines.length * 4.5 + 5;
+    color(bg, 'fill'); doc.roundedRect(M, y, CW, hBanner, 2, 2, 'F');
+    font(9, 'bold'); color(fg); doc.text(tagLines, M + 5, y + 5.5);
+    y += hBanner + 5;
+
+    if (detLines.length) { font(8); color(COL.muted); doc.text(detLines, M, y); y += detLines.length * 4 + 1.5; }
+    if (msgLines.length) { font(9); color(COL.ink); doc.text(msgLines, M, y); y += msgLines.length * 4.6; }
+
+    y += 5;
+    color(COL.edge, 'draw'); doc.setLineWidth(0.3); doc.line(M, y, W - M, y);
+    y += 10;
+  });
+
+  hayLugar(14);
+  font(9); color(COL.muted);
+  doc.text(doc.splitTextToSize('¿Querés que veamos juntos estos números y armemos un plan? Escribinos en lalibretita.com. Mery & Lula.', CW), M, y);
+  pie();
+  return doc;
+}
+function nombreArchivoPDF() {
+  const limpio = (nombreActual() || 'mi_negocio').normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+    .replace(/[^A-Za-z0-9 ]+/g, '').trim().replace(/\s+/g, '_');
+  return `La_Libretita_Costos_${limpio || 'mi_negocio'}.pdf`;
+}
+async function descargarMiPDF(btn) {
+  if (!window.jspdf) {
+    alert('No se pudo preparar el PDF. Revisá tu conexión y volvé a intentar.');
+    return;
+  }
+  const original = btn.textContent;
+  btn.textContent = 'Armando tu resumen…';
+  btn.disabled = true;
+  try {
+    generarPDFResumen().save(nombreArchivoPDF());
+  } catch (err) {
+    alert('Hubo un problema al armar el PDF. Probá de nuevo.');
+  }
+  btn.textContent = original;
+  btn.disabled = false;
+}
+
+/* ---------- init ---------- */
+render();
+</script>
+</body>
+</html>
