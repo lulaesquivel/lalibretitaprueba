@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Autodiagnóstico de tu negocio | La Libretita</title>
+<link rel="canonical" href="https://lalibretita.com/herramientas/autodiagnostico.html">
 <meta name="description" content="Siete preguntas cortas para ver cómo está tu negocio hoy: organización, plata, presupuestos, equipo, ventas y comunicación. Gratis y sin registro.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -109,7 +110,7 @@ a{color:var(--tinta)}
 <div class="hoja">
 
 <nav class="menu" aria-label="La Libretita">
-  <a class="logo" href="https://lalibretita.com">La Libretita</a>
+  <a class="logo" href="../">La Libretita</a>
   <span class="linea" aria-hidden="true"></span>
   <span class="etiqueta">Herramienta gratis</span>
 </nav>
@@ -208,8 +209,8 @@ a{color:var(--tinta)}
       <h2 class="titulo" style="font-size:clamp(30px,5vw,44px)">¿Lo vemos juntos?</h2>
       <p style="margin:10px 0 0;font-size:16px;line-height:1.6">Con este resultado podemos armar tu plan en una primera charla, sin compromiso. Mery &amp; Lula.</p>
       <div class="botones">
-        <a class="btn btn-principal" href="https://lalibretita.com/#contacto">Escribinos <span aria-hidden="true">→</span></a>
-        <a class="btn btn-circulo" id="pRecomendada" href="https://lalibretita.com/herramientas/costos.html"><span><b>Te recomendamos:</b> <span id="pRecNombre">Calculadora de costos</span></span><span class="ico" aria-hidden="true">↗</span></a>
+        <a class="btn btn-principal" href="../#contacto">Escribinos <span aria-hidden="true">→</span></a>
+        <a class="btn btn-circulo" id="pRecomendada" href="costos.html"><span><b>Te recomendamos:</b> <span id="pRecNombre">Calculadora de costos</span></span><span class="ico" aria-hidden="true">↗</span></a>
       </div>
     </div>
   </div>
@@ -223,7 +224,7 @@ a{color:var(--tinta)}
 
 <footer class="pie">
   <span>La Libretita · Mentorías, talleres y comunicación</span>
-  <a href="https://lalibretita.com">lalibretita.com</a>
+  <a href="../">lalibretita.com</a>
 </footer>
 </div>
 
@@ -285,7 +286,7 @@ const TECNOLOGIA={k:"tec",n:"Uso de tecnología",tipo:"multi",esTip:true,opcione
  "Uso correo electrónico"]};
 const PREGUNTAS=[...AREAS,TECNOLOGIA];
 const COLOR={true:"var(--celeste)",false:"var(--rosa)",tip:"var(--manteca)"};
-const U="https://lalibretita.com/herramientas/";
+const U="./";
 
 let RESP=new Array(PREGUNTAS.length).fill(null), qi=0, NOMBRE="", MAIL="";
 const $=id=>document.getElementById(id);
@@ -342,7 +343,7 @@ function recomendada(v){
   const peor=[...AREAS].sort((a,c)=>v[a.k]-v[c.k])[0].k;
   if(peor==="admin"||peor==="pres") return {n:"Calculadora de costos",href:U+"costos.html"};
   if(peor==="com"||peor==="marca") return {n:"Caja de herramientas de comunicación",href:U+"comunicacion.html"};
-  return {n:"Desafíos con IA",href:"https://lalibretita.com/#herramientas"};
+  return {n:"Desafíos con IA",href:"../#herramientas"};
 }
 
 /* ══════════ 3. PANTALLAS ══════════ */
